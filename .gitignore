@@ -1,0 +1,23 @@
+# .gitignore para Django
+
+# Archivos de Python compilados
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Entorno Virtual (¡MUY IMPORTANTE NO SUBIR ESTO!)
+venv/
+env/
+.env
+
+# Base de datos (Generalmente no se sube, se crea una nueva en el servidor)
+db.sqlite3
+
+# Archivos estáticos y media
+# (Media se suele ignorar en producción, pero para tu demo puedes subir las fotos si quieres)
+# Si quieres subir tus fotos de empanadas, pon un # al principio de la siguiente línea:
+# media/ 
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db

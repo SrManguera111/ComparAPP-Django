@@ -1,0 +1,96 @@
+/* iniciar_sesion.css */
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #080202;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+form {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    transition: transform 0.3s ease-in-out;
+}
+
+form:hover {
+    transform: translateY(-5px);
+}
+
+label {
+    font-size: 16px;
+    color: #2c3e50;
+    display: block;
+    margin-bottom: 10px;
+}
+
+input[type="text"], input[type="password"] {
+    width: 100%;
+    padding: 12px 20px;
+    margin-top: 8px;
+    margin-bottom: 20px;
+    display: inline-block;
+    border: 1px solid #dcdde1;
+    border-radius: 10px;
+    box-sizing: border-box;
+    background-color: #f9f9f9;
+    font-size: 14px;
+    transition: border-color 0.3s;
+}
+
+input[type="text"]:focus, input[type="password"]:focus {
+    outline: none;
+    border-color: #DB241B;
+}
+
+button {
+    width: 100%;
+    background-color: #DB241B;
+    color: white;
+    padding: 14px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+button:hover {
+    background-color: #DB241B;
+    box-shadow: 0px 8px 15px rgba(30, 144, 255, 0.3);
+}
+
+#btn-iniciar-sesion {
+    margin-top: 20px;
+}
+
+#error {
+    color: #e74c3c;
+    font-size: 14px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+a{
+    text-align: center;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    form {
+        padding: 30px;
+    }
+
+    button {
+        padding: 12px 18px;
+        font-size: 15px;
+    }
+}

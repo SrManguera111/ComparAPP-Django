@@ -1,0 +1,94 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nosotros - ComparAPP</title>
+    <link rel="stylesheet" href="{% static 'nosotros.css' %}">
+    </head>
+<body>
+
+    <nav class="navbar">
+        <ul class="nav-menu menu-left">
+            <li><a href="{% url 'index' %}">Inicio</a></li>
+            <li><a href="#">Servicios</a></li>
+            <li><a href="{% url 'catalogo' %}">Productos</a></li>
+        </ul>
+
+        <div class="nav-logo">
+            <a href="{% url 'index' %}">ComparAPP</a>
+        </div>
+
+        <ul class="nav-menu menu-right">
+             {% if user.is_authenticated %}
+                <li>Hola, {{ user.username }}</li>
+                <li><a href="{% url 'cerrar_sesion' %}" class="btn-nav">Cerrar sesión</a></li>
+            {% else %}
+                <li><a href="{% url 'iniciar_sesion' %}">Iniciar sesión</a></li>
+                <li><a href="{% url 'crear_cuenta' %}" class="btn-nav">Crear cuenta</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    <main class="nosotros-container">
+        <section class="hero-nosotros">
+            <div class="hero-content">
+                <h1>Nuestra Historia</h1>
+                <p class="hero-subtitle">Conectando a las personas con la mejor comida local.</p>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <div class="text-block">
+                <h2>¿Quiénes Somos?</h2>
+                <p>
+                    En <strong>ComparAPP</strong>, lo que buscamos es conectar a las personas con los alimentos que necesitan a través de una plataforma confiable y eficiente. Creemos en ofrecer una experiencia única, facilitando la búsqueda de productos alimenticios de calidad y ajustándonos a las necesidades de cada cliente.
+
+                    Nuestra empresa se fundó con el propósito de simplificar la compra y el descubrimiento de nuevos sabores, manteniendo altos estándares de servicio y satisfacción del cliente. Con un equipo apasionado y comprometido, trabajamos día a día para ofrecer una solución práctica y moderna que ahorre tiempo a nuestros usuarios.
+
+                    Además, valoramos la innovación, la sostenibilidad y el compromiso con la comunidad, lo que nos impulsa a crear herramientas tecnológicas que realmente marquen la diferencia en el día a día de las personas.
+
+                    Queremos ser más que una simple plataforma: aspiramos a convertirnos en el aliado ideal para estudiantes y trabajadores dentro del campus, ayudándolos a optimizar su tiempo y disfrutar de una experiencia de compra sin complicaciones.
+                </p>
+            </div>
+            <div class="image-block">
+                <img src="{% static 'images/equipo_ComparAPP.png' %}" alt="Equipo Food Finder">
+            </div>
+        </section>
+
+        <section class="content-section reverse">
+             <div class="text-block">
+                <h2>Nuestra Misión</h2>
+                <p>
+                    Buscamos facilitar la vida de nuestros usuarios a través de tecnología innovadora y soluciones prácticas. Nuestro compromiso es mantenernos a la vanguardia y fomentar un impacto positivo en nuestra comunidad.
+                </p>
+            </div>
+            <div class="image-block">
+                 <img src="{% static 'images/mision_ComparAPP.png' %}" alt="Misión Food Finder">
+            </div>
+        </section>
+
+        <section class="valores-section">
+            <h2>Nuestros Valores</h2>
+            <div class="valores-grid">
+                <div class="valor-card">
+                    <div class="icon">❤️</div>
+                    <h3>Pasión</h3>
+                    <p>Amamos lo que hacemos y eso se refleja en cada detalle.</p>
+                </div>
+                <div class="valor-card">
+                    <div class="icon">🤝</div>
+                    <h3>Comunidad</h3>
+                    <p>Construimos relaciones fuertes entre comensales y dueños.</p>
+                </div>
+                <div class="valor-card">
+                    <div class="icon">🚀</div>
+                    <h3>Innovación</h3>
+                    <p>Buscamos nuevas formas de mejorar tu experiencia.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

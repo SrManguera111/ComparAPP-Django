@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Cuenta</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'crear_cuenta.css' %}">
+</head>
+<body>
+    <form action="{% url 'crear_cuenta' %}" method="POST">
+        {% csrf_token %}
+        <label class="mt-4">Nombre de usuario
+            <br>
+            <input name="nombre-usuario" type="text" required>
+        </label>
+        <label>Nombre
+            <br>
+            <input name="nombre" type="text" required>
+        </label>
+        <br>
+        <label>Apellido
+            <br>
+            <input name="apellido" type="text" required>
+        </label>
+        <label>Email
+            <br>
+            <input name="email" type="email" required>
+        </label>
+        <label>Contraseña
+            <br>
+            <input id="contrasena" name="contrasena" type="password" required>
+        </label>
+        <label>Confirmar contraseña
+            <br>
+            <input id="confirmar-contrasena" name="confirmar_contrasena" type="password" required>
+        </label>
+        <div class="mt-4">
+            <button class="btn btn-primary" id="btn-crear-cuenta" type="submit">
+                Crear cuenta
+            </button>
+        </div>
+    </form>
+</body>
+</html>

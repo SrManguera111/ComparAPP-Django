@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mis Compras</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <style>
+        /* Estilos específicos para el historial (puedes moverlos a style.css) */
+        body { background-color: #111; color: white; font-family: 'Poppins', sans-serif; }
+        
+        .historial-container {
+            max-width: 800px;
+            margin: 100px auto; /* Margen superior para no chocar con el menú */
+            padding: 20px;
+        }
+
+        .titulo-historial {
+            text-align: center;
+            color: #DB241B; /* Tu rojo corporativo */
+            margin-bottom: 40px;
+            font-size: 2.5rem;
+            text-transform: uppercase;
+        }
+
+        .orden-card {
+            background-color: #222;
+            border: 1px solid #333;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        .orden-header {
+            background-color: #333;
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #444;
+        }
+
+        .orden-info h3 { margin: 0; font-size: 1.2rem; color: #fff; }
+        .orden-fecha { font-size: 0.9rem; color: #aaa; }
+        .orden-total { color: #DB241B; font-weight: bold; font-size: 1.2rem; }
+
+        .orden-body { padding: 20px; }
+        
+        .item-lista {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .item-producto {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #333;
+        }
+        .item-producto:last-child { border-bottom: none; }
+
+        .producto-nombre { font-weight: 500; }
+        .producto-detalle { color: #bbb; font-size: 0.9rem; }
+
+        .btn-volver {
+            display: block;
+            width: fit-content;
+            margin: 20px auto;
+            padding: 10px 30px;
+            background-color: #DB241B;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+        }
+        .btn-volver:hover { background-color: #b31b14; }
+        
+        .sin-compras { text-align: center; color: #777; font-size: 1.2rem; margin-top: 50px;}
+    </style>
+</head>
+<body>
+
+    <nav class="navbar" style="position: fixed; top: 0; width: 100%; background: #000; padding: 15px; z-index: 1000;">
+        <a href="{% url 'index' %}" style="color: white; text-decoration: none; font-weight: bold; font-size: 1.5rem;">FOOD FINDER</a>
+    </nav>
+
+    <div class="historial-container">
+        <h1 class="titulo-historial">Historial de Compras</h1>
+
+        {% if ordenes %}
+            {% for orden in ordenes %}
+                <div class="orden-card">
+                    <div class="orden-header">
+                        <div class="orden-info">
+                            <h3>Pedido #{{ orden.id }}</h3>
+                            <span class="orden-fecha">{{ orden.fecha_creacion|date:"d M Y - H:i" }}</span>
+                        </div>
+                        <div class="orden-total">
+                            ${{ orden.total }}
+                        </div>
+                    </div>
+                    <div class="orden-body">
+                        <ul class="item-lista">
+                            {% for detalle in orden.items.all %}
+                            <li class="item-producto">
+                                <div>
+                                    <span class="producto-nombre">{{ detalle.producto.nombre }}</span>
+                                    <br>
+                                    <span class="producto-detalle">Precio unitario: ${{ detalle.precio_al_momento }}</span>
+                                </div>
+                                <div>
+                                    x{{ detalle.cantidad }}
+                                </div>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="sin-compras">
+                <p>Aún no has realizado ninguna compra.</p>
+            </div>
+        {% endif %}
+
+        <a href="{% url 'index' %}" class="btn-volver">Volver al Menú</a>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión</title>
+    <link rel="stylesheet" href="{% static 'iniciar_sesion.css' %}">
+</head>
+<body>
+    <form method="post" action="{% url 'iniciar_sesion' %}">
+        {% csrf_token %}
+        <label class="mt-4">Usuario
+            <br>
+            <input type="text" name="nombre-usuario" required>
+        </label>
+        <br>
+        <label>Contraseña
+            <br>
+            <input type="password" name="contrasena" required>
+        </label>
+        <div style="text-align: right; margin-bottom: 10px;">
+            <a href="{% url 'password_reset' %}" style="font-size: 0.8rem; color: #555;">
+                ¿Olvidaste tu contraseña?
+            </a>
+        </div>
+        <br>
+        <div id="error" class="mt-3">
+            {% if error %}
+                <p style="color: red;">{{ error }}</p>
+            {% endif %}
+        </div>
+        <button class="btn btn-primary mt-3" type="submit" id="btn-iniciar-sesion">
+            Iniciar sesión
+        </button>
+        <div style="margin-top: 20px; text-align: center;">
+            <p>¿Aún no tienes cuenta?</p>
+            <a href="{% url 'crear_cuenta' %}" style="color: #DB241B; text-decoration: none; font-weight: bold;">
+                Registrarse
+            </a>
+        </div>
+    </form>
+</body>
+</html>

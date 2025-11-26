@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados de búsqueda</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <style>
+        body { background-color: #111; color: white; font-family: 'Poppins', sans-serif; }
+        .results-container { max-width: 1200px; margin: 100px auto; padding: 20px; }
+        .titulo-busqueda { color: #DB241B; margin-bottom: 30px; text-align: center; }
+        
+        /* Rejilla de productos */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        /* Reutilizamos estilos de tus tarjetas de producto, pero ajustados a grid */
+        .product-card {
+            background-color: #1E1E1E;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid #333;
+        }
+        .product-card img { width: 100%; height: 200px; object-fit: cover; border-radius: 10px; }
+        .product-card h4 { margin: 15px 0 5px; color: white; }
+        .product-card .price { color: #DB241B; font-weight: bold; font-size: 1.2rem; display: block; margin: 10px 0; }
+        
+        .btn-volver {
+            display: inline-block; margin-top: 30px; text-decoration: none; color: white; border-bottom: 1px solid #DB241B;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar" style="position: fixed; top: 0; width: 100%; background: #000; padding: 15px; z-index: 1000; display:flex; justify-content:space-between; align-items:center;">
+        <a href="{% url 'index' %}" style="color: white; text-decoration: none; font-weight: bold; font-size: 1.5rem;">ComparAPP</a>
+        
+        <div style="color: white; margin-right: 50px; cursor: pointer;" id="cart-icon">
+            🛒 <span id="cart-count">0</span>
+        </div>
+    </nav>
+
+    <div class="results-container">
+        {% if query %}
+            <h1 class="titulo-busqueda">Resultados para: "{{ query }}"</h1>
+        {% else %}
+            <h1 class="titulo-busqueda">Buscador de Productos</h1>
+        {% endif %}
+
+        {% if resultados %}
+            <div class="products-grid">
+                {% for p in resultados %}
+                <div class="product-card">
+                    <div class="product-img">
+                        {% if p.imagen %}
+                            <img src="{{ p.imagen.url }}" alt="{{ p.nombre }}">
+                        {% else %}
+                            <img src="{% static 'images/no-image.jpg' %}" alt="">
+                        {% endif %}
+                    </div>
+                    <div class="product-txt">
+                        <h4>{{ p.nombre }}</h4>
+                        <p>Calidad Premium</p>
+                        <span class="price">${{ p.precio }}</span>
+                        
+                        <button class="btn-add add-to-cart" 
+                                data-id="{{ p.id }}" 
+                                data-name="{{ p.nombre }}" 
+                                data-price="{{ p.precio }}"
+                                style="background-color: #DB241B; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold;">
+                            Agregar al carrito
+                        </button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div style="text-align: center; margin-top: 50px;">
+                <p style="font-size: 1.2rem; color: #777;">No encontramos productos con ese nombre :(</p>
+            </div>
+        {% endif %}
+        
+        <div style="text-align: center;">
+            <a href="{% url 'index' %}" class="btn-volver">← Volver al inicio</a>
+        </div>
+    </div>
+
+    <div class="cart-overlay" id="cart-overlay"></div>
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h2>Tu Carrito</h2>
+            <span class="close-cart" id="close-cart">×</span>
+        </div>
+        <div class="cart-items" id="cart-items">
+            <p>Tu carrito está vacío</p>
+        </div>
+        <div class="cart-footer">
+            <h3>Total: $<span id="cart-total">0</span></h3>
+            <button class="btn-checkout">Pagar ahora</button>
+        </div>
+    </div>
+
+    <div id="qr-modal" class="qr-overlay">
+        <div class="qr-content">
+            <span class="close-qr" id="close-qr">×</span>
+            <h2>¡Escanea para pedir!</h2>
+            <div id="qrcode-container"></div>
+            <br>
+            <button class="btn-checkout" id="btn-finish-order">Cerrar</button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script> 
+    <script src="{% static 'script.js' %}"></script>
+
+</body>
+</html>

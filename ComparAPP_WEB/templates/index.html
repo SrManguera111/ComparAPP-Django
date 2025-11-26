@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Finder</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+
+<body>
+
+    <header>
+        <div class="menu container">
+
+            <img class="logo-1" src="{% static 'images/logo_ComparAPP.png'%}" alt="">
+            <input type="checkbox" id="menu" />
+            <label for="menu">
+                <img src="{% static 'images/menu.png'%}" class="menu-icono" alt="">
+            </label>
+            <nav class="navbar">
+                <div class="menu-1">
+                    <ul>
+                        <li><a href="http://127.0.0.1:8000/#">Inicio</a></li>
+                        <li><a href="#">Servicios</a></li>
+                        <li><a href="{% url 'catalogo' %}">Productos</a>
+                    </ul>
+                </div>
+                <img class="logo-2" src="{% static 'images/logo_ComparAPP.png'%}" alt="">
+                <div class="search-box">
+                    <form method="GET" action="{% url 'buscar' %}">
+                        <input type="text" name="q" placeholder="Buscar...">
+                        <button type="submit">🔍</button>
+                    </form>
+                </div>
+                <div class="menu-2">
+                    <ul>
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'perfil' %}">Mi Perfil</a></li> 
+                        <li><a href="{% url 'historial' %}">Mis Compras</a></li>
+                        <li><a href="{% url 'cerrar_sesion' %}">Cerrar sesión</a></li>
+                    {% else %}
+                        <li><a href="{% url 'iniciar_sesion' %}">Iniciar sesión</a></li>
+                        <li><a href="{% url 'crear_cuenta' %}">Crear cuenta</a></li>
+                    {% endif %}
+                    
+                        <li id="cart-icon">
+                        🛒 <span id="cart-count">0</span>
+                        </li>
+                    </ul>
+                </div>
+                
+            </nav>
+        </div>
+
+        <div class="header-content container">
+
+            <div class="swiper mySwiper-1">
+                <div class="swiper-wrapper">
+
+                    <div class="swiper-slide">
+                        <div class="slider">
+                            <div class="slider-txt">
+                                <h1>Empanadas de pino</h1>
+                                <p>Rica masa de harina de trigo horneada rellena con carne de vacuno, 
+                                   cebolla sofrita, aceitunas, pasas y huevo duro, 
+                                   sazonada con especias como comino y ají de color.
+                                </p>
+                                <div class="botones">
+                                    <a href="#" class="btn-1">Comprar</a>
+                                    <a href="#" class="btn-1">Menu</a>
+                                </div>
+                            </div>
+                            <div class="slider-img">
+                                <img src="{% static 'images/empanada_castano.jpg'%}" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="slider">
+                            <div class="slider-txt">
+                                <h1>Donas</h1>
+                                <p>Dona suave, esponjosa y cubierta de dulzura irresistible.
+                                </p>
+                                <div class="botones">
+                                    <a href="#" class="btn-1">Comprar</a>
+                                    <a href="#" class="btn-1">Menu</a>
+                                </div>
+                            </div>
+                            <div class="slider-img">
+                                <img src="{% static 'images/dona1.jpg'%}" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="slider">
+                            <div class="slider-txt">
+                                <h1>Bebida Bilz</h1>
+                                <p>Refrescante gaseosa con un sabor dulce y burbujeante, 
+                                   perfecta para acompañar cualquier comida o disfrutar en cualquier momento.
+                                </p>
+                                <div class="botones">
+                                    <a href="#" class="btn-1">Comprar</a>
+                                    <a href="#" class="btn-1">Menu</a>
+                                </div>
+                            </div>
+                            <div class="slider-img">
+                                <img src="{% static 'images/bilz.jpg'%}" alt="">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="swiper-button-next"> </div>
+                <div class="swiper-button-prev"> </div>
+                <div class="swiper-pagination"> </div>
+            </div>
+
+        </div>
+    </header>
+
+    <main class="products">
+        <div class="tabs container">
+
+            <input type="radio" name="tabs" id="tab1" checked="checked" class="tabInput" value="1">
+            <label for="tab1">Empanadas</label>
+            <div class="tab">
+                <div class="swiper mySwiper-2" id="swiper1">
+                    <div class="swiper-wrapper">
+                        {% for p in empanadas %}
+                        <div class="swiper-slide">
+                            <div class="product">
+                                <div class="product-img">
+                                    {% if p.nuevo %}
+                                    <h4>Nuevo</h4>
+                                    {% endif %}
+                                    {% if p.imagen %}
+                                    <img src="{{ p.imagen.url }}" alt="{{ p.nombre }}">
+                                    {% else %}
+                                    <img src="{% static 'images/no-image.jpg'%}" alt="">
+                                    {% endif %}
+                                </div>
+                                <div class="product-txt">
+                                    <h4>{{ p.nombre }}</h4>
+                                    <p>Calidad Premium</p>
+                                    <span class="price">${{ p.precio }}</span>
+                                    <button class="btn-add add-to-cart" 
+                                            data-id="{{ p.id }}" 
+                                            data-name="{{ p.nombre }}" 
+                                            data-price="{{ p.precio }}">Agregar al carrito</button>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}  
+                    </div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+            </div>
+
+            <input type="radio" name="tabs" id="tab2" checked="checked" class="tabInput" value="2">
+            <label for="tab2">Dulceria</label>
+            <div class="tab">
+                <div class="swiper mySwiper-2" id="swiper2">
+                    <div class="swiper-wrapper">
+                        {% for p in dulceria %}
+                        <div class="swiper-slide">
+                            <div class="product">
+                                <div class="product-img">
+                                    {% if p.nuevo %}
+                                    <h4>Nuevo</h4>
+                                    {% endif %}
+                                    {% if p.imagen %}
+                                    <img src="{{ p.imagen.url }}" alt="{{ p.nombre }}">
+                                    {% else %}
+                                    <img src="{% static 'images/no-image.jpg'%}" alt="">
+                                    {% endif %}
+                                </div>
+                                <div class="product-txt">
+                                    <h4>{{ p.nombre }}</h4>
+                                    <p>Calidad Premium</p>
+                                    <span class="price">${{ p.precio }}</span>
+                                    <button class="btn-add add-to-cart" 
+                                            data-id="{{ p.id }}" 
+                                            data-name="{{ p.nombre }}"
+                                            data-price="{{ p.precio }}">Agregar al carrito</button>
+                                </div>
+                            </div>
+                        </div> 
+                        {% endfor %}  
+                    </div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+            </div>
+
+            <input type="radio" name="tabs" id="tab3" checked="checked" class="tabInput" value="3">
+            <label for="tab3">Bebestibles</label>
+            <div class="tab">
+                <div class="swiper mySwiper-2" id="swiper3">
+                    <div class="swiper-wrapper">
+                        {% for p in bebestibles %}
+                        <div class="swiper-slide">
+                            <div class="product">
+                                <div class="product-img">
+                                    {% if p.nuevo %}
+                                    <h4>Nuevo</h4>
+                                    {% endif %}
+                                    {% if p.imagen %}
+                                    <img src="{{ p.imagen.url }}" alt="{{ p.nombre }}">
+                                    {% else %}
+                                    <img src="{% static 'images/no-image.png'%}" alt="">
+                                    {% endif %}
+                                </div>
+                                <div class="product-txt">
+                                    <h4>{{ p.nombre }}</h4>
+                                    <p>Calidad Premium</p>
+                                    <span class="price">${{ p.precio }}</span>
+                                    <button class="btn-add add-to-cart" 
+                                            data-id="{{ p.id }}" 
+                                            data-name="{{ p.nombre }}"
+                                            data-price="{{ p.precio }}">Agregar al carrito</button>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor%}  
+                    </div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+            </div>
+
+            <input type="radio" name="tabs" id="tab4" checked="checked" class="tabInput" value="4">
+            <label for="tab4">Sandwich</label>
+            <div class="tab">
+                <div class="swiper mySwiper-2" id="swiper4">
+                    <div class="swiper-wrapper">    
+                        {% for p in sandwiches %}
+                        <div class="swiper-slide">
+                            <div class="product">
+                                <div class="product-img">
+                                    {% if p.nuevo %}
+                                    <h4>Nuevo</h4>
+                                    {% endif %}
+                                    {% if p.imagen %}
+                                    <img src="{{ p.imagen.url }}" alt="{{ p.nombre }}">
+                                    {% else %}
+                                    <img src="{% static 'images/no-image.png'%}" alt="">
+                                    {% endif %}
+                                </div>
+                                <div class="product-txt">
+                                    <h4>{{ p.nombre }}</h4>
+                                    <p>Calidad Premium</p>
+                                    <span class="price">${{ p.precio }}</span>
+                                    <button class="btn-add add-to-cart" 
+                                            data-id="{{ p.id }}" 
+                                            data-name="{{ p.nombre }}"
+                                            data-price="{{ p.precio }}">Agregar al carrito</button>
+                                </div>
+                            </div>
+                        </div> 
+                        {% endfor %}  
+                    </div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+            </div>
+            <input type="radio" name="tabs" id="tab5" checked="checked" class="tabInput" value="5">
+            <label for="tab5">Galletas</label>
+            <div class="tab">
+                <div class="swiper mySwiper-2" id="swiper5">
+                    <div class="swiper-wrapper">
+                        {% for p in galletas %}
+                        <div class="swiper-slide">
+                            <div class="product">
+                                <div class="product-img">
+                                    {% if p.nuevo %}
+                                    <h4>Nuevo</h4>
+                                    {% endif %}
+                                    {% if p.imagen %}
+                                    <img src="{{ p.imagen.url }}" alt="{{ p.nombre }}">
+                                    {% else %}
+                                    <img src="{% static 'images/no-image.jpg'%}" alt="">
+                                    {% endif %}
+                                </div>
+                                <div class="product-txt">
+                                    <h4>{{ p.nombre }}</h4>
+                                    <p>Calidad Premium</p>
+                                    <span class="price">${{ p.precio }}</span>
+                                    <button class="btn-add add-to-cart" 
+                                            data-id="{{ p.id }}" 
+                                            data-name="{{ p.nombre }}" 
+                                            data-price="{{ p.precio }}">Agregar al carrito</button>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}  
+                    </div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <section class="info container">
+
+        <div class="info-img">
+            <img src="{% static 'images/benedictino.png'%}" alt="">
+
+        </div>
+
+        <div class="info-txt">
+            <h2>Benedictino</h2>
+            <p>Benedictino: pureza y frescor que acompañan cada momento.
+            </p>
+            <a href="#" class="btn-2">Mas Informacion</a>
+        </div>
+
+    </section>
+
+    <section class="horario">
+        <div class="horario-info container">
+
+            <h2>Horario</h2>
+            <div class="horario-txt">
+                <div class="txt">
+                    <h4>Direccion</h4>
+                    <p>
+                        Inacap Maipú
+                    </p>
+                </div>
+                <div class="txt">
+                    <h4>Horario</h4>
+                    <p>
+                        Lunes a Viernes : 9 am - 8 pm
+                    </p>
+                </div>
+
+                <div class="txt">
+                    <h4>Telefono</h4>
+                    <p>
+                        +569 55555555
+                    </p>
+                </div>
+
+                <div class="txt">
+                    <h4>Redes Sociales</h4>
+                    <div class="socials">
+                        <a href="#">
+                            <div class="social">
+                                <img src="{% static 'images/s1.svg'%}" alt="">
+                            </div>
+                        </a>
+                        <a href="#">
+                            <div class="social">
+                                <img src="{% static 'images/s2.svg'%}" alt="">
+                            </div>
+                        </a>
+                        <a href="#">
+                            <div class="social">
+                                <img src="{% static 'images/s3.svg'%}" alt="">
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <iframe class="map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3327.79943917318!2d-70.75871792430783!3d-33.48057207337758!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662c3190bc907f1%3A0xcb5e8e74e104ff9d!2sInacap%20Sede%20Maip%C3%BA!5e0!3m2!1ses-419!2scl!4v1755909472549!5m2!1ses-419!2scl" width="100%" height="500" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </section>
+
+    <footer class="footer-section">
+        <div class="container">
+            <div class="footer-content">
+                
+                <div class="footer-col">
+                    <img src="{% static 'images/logo_ComparAPP.png' %}" alt="Food Finder Logo" class="footer-logo">
+                    <p class="footer-text">
+                        Conectamos tu hambre con los mejores sabores locales. 
+                        Calidad, rapidez y buen gusto en cada pedido.
+                    </p>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Explorar</h4>
+                    <ul>
+                        <li><a href="{% url 'index' %}">Inicio</a></li>
+                        <li><a href="{% url 'nosotros' %}">Sobre Nosotros</a></li>
+                        <li><a href="{% url 'catalogo' %}">Productos</a></li>
+                        {% if user.is_authenticated %}
+                            <li><a href="{% url 'historial' %}">Mis Compras</a></li>
+                        {% else %}
+                            <li><a href="{% url 'crear_cuenta' %}">Registrarse</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Contacto</h4>
+                    <ul>
+                        <li><span>📍</span> Inacap Sede Maipú</li>
+                        <li><span>📞</span> +56 9 5555 5555</li>
+                        <li><span>✉️</span> contacto@comparapp.cl</li>
+                        <li><span>🕒</span> Lun - Vie: 9am - 8pm</li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Síguenos</h4>
+                    <div class="social-links">
+                        <a href="#"><img src="{% static 'images/s1.svg' %}" alt="Facebook"></a>
+                        <a href="#"><img src="{% static 'images/s2.svg' %}" alt="Instagram"></a>
+                        <a href="#"><img src="{% static 'images/s3.svg' %}" alt="Twitter"></a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2024 <strong>ComparAPP</strong>. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <div class="cart-overlay" id="cart-overlay"></div>
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h2>Tu Carrito</h2>
+            <span class="close-cart" id="close-cart">×</span>
+        </div>
+        <div class="cart-items" id="cart-items">
+            <p>Tu carrito está vacío</p>
+        </div>
+        <div class="cart-footer">
+            <h3>Total: $<span id="cart-total">0</span></h3>
+            <button class="btn-checkout">Pagar ahora</button>
+        </div>
+    </div>
+
+    <div id="qr-modal" class="qr-overlay">
+        <div class="qr-content">
+            <span class="close-qr" id="close-qr">×</span>
+            <h2>¡Escanea para pedir!</h2>
+            <p>Escanea este código para enviar tu pedido por WhatsApp:</p>
+            
+            <div id="qrcode-container"></div>
+            
+            <br>
+            <button class="btn-checkout" id="btn-finish-order">Cerrar y Limpiar Carrito</button>
+        </div>
+    </div>
+
+    <div id="toast">
+        <div id="img">✅</div>
+        <div id="desc">Producto agregado al carrito</div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+    <script src="{% static 'script.js' %}"></script>
+</body>
+
+</html>

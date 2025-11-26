@@ -1,0 +1,202 @@
+/* --- Estilos Generales de la página Nosotros --- */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #000; /* Fondo negro como en tu imagen */
+    padding: 1rem 5%;
+    position: sticky;
+    top: 0;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 2rem; /* Espacio entre enlaces */
+    flex: 1; /* Ayuda a distribuir el espacio equitativamente */
+}
+
+/* Alineación específica para que el logo quede perfectamente centrado */
+.menu-left {
+    justify-content: flex-start;
+}
+.menu-right {
+    justify-content: flex-end;
+}
+
+.nav-menu li a, .nav-menu li {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.3s ease;
+}
+
+.nav-menu li a:hover {
+    color: #DB241B; /* Color rojo al pasar el mouse */
+}
+
+.nav-logo {
+    flex: 0 0 auto; /* No dejar que el logo se estire o encoja */
+    margin: 0 20px;
+}
+
+.nav-logo a {
+    font-size: 28px;
+    font-weight: 900; /* Muy negrita */
+    color: #DB241B;   /* TU COLOR ROJO CORPORATIVO */
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Botón opcional para destacar 'Crear cuenta' o 'Cerrar sesión' */
+.btn-nav {
+    background-color: #DB241B;
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+.btn-nav:hover {
+    background-color: #b31b14;
+    color: #fff !important;
+}
+.nosotros-container {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* --- Sección Hero --- */
+.hero-nosotros {
+    background-color: #1a1a1a; /* Fondo oscuro o puedes poner una imagen de fondo */
+    color: white;
+    text-align: center;
+    padding: 100px 20px;
+    margin-bottom: 50px;
+}
+
+.hero-nosotros h1 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+    color: #DB241B; /* Usando tu color rojo corporativo */
+}
+
+.hero-subtitle {
+    font-size: 1.5rem;
+    opacity: 0.9;
+}
+
+/* --- Secciones de Contenido (Texto + Imagen) --- */
+.content-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4rem;
+    max-width: 1100px;
+    margin: 0 auto 80px auto; /* Centrado horizontalmente */
+    padding: 0 20px;
+}
+
+.content-section.reverse {
+    flex-direction: row-reverse; /* Invierte el orden para la segunda sección */
+}
+
+.text-block {
+    flex: 1; /* Ocupa el 50% del espacio disponible */
+}
+
+.text-block h2 {
+    font-size: 2.2rem;
+    color: #DB241B;
+    margin-bottom: 20px;
+    position: relative;
+}
+/* Pequeña línea decorativa bajo los títulos H2 */
+.text-block h2::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 4px;
+    background: #DB241B;
+    margin-top: 10px;
+}
+
+.image-block {
+    flex: 1;
+}
+
+.image-block img {
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15); /* Sombra elegante */
+    object-fit: cover;
+    height: 350px; /* Altura fija para uniformidad */
+}
+
+/* --- Sección de Valores (Tarjetas) --- */
+.valores-section {
+    background-color: #f9f9f9; /* Fondo gris claro para diferenciar */
+    padding: 80px 20px;
+    text-align: center;
+}
+
+.valores-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 50px;
+}
+
+.valores-grid {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap; /* Permite que bajen a otra línea en pantallas pequeñas */
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.valor-card {
+    background: white;
+    padding: 40px 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+    flex: 1 1 300px; /* Crecen hasta ocupar espacio, base de 300px */
+    max-width: 350px;
+    transition: transform 0.3s ease;
+}
+
+.valor-card:hover {
+    transform: translateY(-10px); /* Efecto de "levantarse" al pasar el mouse */
+}
+
+.valor-card .icon {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.valor-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+/* --- Responsividad (Para celulares) --- */
+@media (max-width: 768px) {
+    .hero-nosotros {
+        padding: 60px 20px;
+    }
+    .hero-nosotros h1 {
+        font-size: 2.2rem;
+    }
+    .content-section {
+        flex-direction: column; /* Pone el texto sobre la imagen en móviles */
+        gap: 2rem;
+        margin-bottom: 50px;
+    }
+    .content-section.reverse {
+        flex-direction: column;
+    }
+    .image-block img {
+        height: 250px; /* Imágenes más bajas en celular */
+    }
+}

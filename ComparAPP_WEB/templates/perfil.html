@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Perfil - ComparAPP</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <style>
+        /* Estilos específicos para el perfil */
+        body { background-color: #080202; color: white; font-family: 'Poppins', sans-serif; }
+        
+        .perfil-container {
+            max-width: 500px;
+            margin: 100px auto;
+            padding: 40px;
+            background-color: #111;
+            border-radius: 15px;
+            border: 1px solid #333;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+
+        h2 { text-align: center; color: #DB241B; margin-bottom: 30px; text-transform: uppercase; }
+
+        .form-group { margin-bottom: 20px; }
+
+        label { display: block; margin-bottom: 8px; color: #aaa; font-size: 0.9rem; }
+
+        input[type="text"], input[type="email"] {
+            width: 100%;
+            padding: 12px;
+            background-color: #222;
+            border: 1px solid #444;
+            border-radius: 5px;
+            color: white;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input:focus { border-color: #DB241B; }
+
+        /* Campo de usuario deshabilitado (no se debe cambiar) */
+        input.readonly {
+            background-color: #1a1a1a;
+            color: #666;
+            cursor: not-allowed;
+        }
+
+        .btn-guardar {
+            width: 100%;
+            padding: 15px;
+            background-color: #DB241B;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+        .btn-guardar:hover { background-color: #b31b14; }
+
+        .mensaje-exito {
+            background-color: rgba(40, 167, 69, 0.2);
+            color: #28a745;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            margin-bottom: 20px;
+            border: 1px solid #28a745;
+        }
+
+        .btn-volver {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #777;
+            text-decoration: none;
+        }
+        .btn-volver:hover { color: white; }
+
+    </style>
+</head>
+<body>
+
+    <nav class="navbar" style="position: fixed; top: 0; width: 100%; background: #000; padding: 15px; z-index: 1000;">
+        <a href="{% url 'index' %}" style="color: white; text-decoration: none; font-weight: bold; font-size: 1.5rem;">FOOD FINDER</a>
+    </nav>
+
+    <div class="perfil-container">
+        <h2>Editar Perfil</h2>
+
+        {% if mensaje %}
+            <div class="mensaje-exito">{{ mensaje }}</div>
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label>Nombre de Usuario (No editable)</label>
+                <input type="text" value="{{ user.username }}" class="readonly" readonly>
+            </div>
+
+            <div class="form-group">
+                <label>Nombre</label>
+                <input type="text" name="nombre" value="{{ user.first_name }}" required>
+            </div>
+
+            <div class="form-group">
+                <label>Apellido</label>
+                <input type="text" name="apellido" value="{{ user.last_name }}" required>
+            </div>
+
+            <div class="form-group">
+                <label>Correo Electrónico</label>
+                <input type="email" name="email" value="{{ user.email }}" required>
+            </div>
+
+            <button type="submit" class="btn-guardar">Guardar Cambios</button>
+            
+            <a href="{% url 'index' %}" class="btn-volver">← Volver al inicio</a>
+        </form>
+    </div>
+
+</body>
+</html>
