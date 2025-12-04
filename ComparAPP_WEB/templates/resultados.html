@@ -8,27 +8,28 @@
     <link rel="stylesheet" href="{% static 'style.css' %}">
     <style>
         body { background-color: #111; color: white; font-family: 'Poppins', sans-serif; }
-        .results-container { max-width: 1200px; margin: 100px auto; padding: 20px; }
+        .results-container { max-width: 1200px; margin: 120px auto 50px auto; padding: 20px; }
         .titulo-busqueda { color: #DB241B; margin-bottom: 30px; text-align: center; }
         
-        /* Rejilla de productos */
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 30px;
         }
         
-        /* Reutilizamos estilos de tus tarjetas de producto, pero ajustados a grid */
         .product-card {
             background-color: #1E1E1E;
             border-radius: 15px;
             padding: 20px;
             text-align: center;
             border: 1px solid #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-        .product-card img { width: 100%; height: 200px; object-fit: cover; border-radius: 10px; }
-        .product-card h4 { margin: 15px 0 5px; color: white; }
-        .product-card .price { color: #DB241B; font-weight: bold; font-size: 1.2rem; display: block; margin: 10px 0; }
+        .product-card img { width: 100%; height: 200px; object-fit: contain; border-radius: 10px; margin-bottom: 15px; }
+        .product-card h4 { margin: 0 0 5px; color: white; font-size: 1.2rem; }
+        .product-card p { color: #888; font-size: 0.9rem; margin-bottom: 15px; }
         
         .btn-volver {
             display: inline-block; margin-top: 30px; text-decoration: none; color: white; border-bottom: 1px solid #DB241B;
@@ -38,7 +39,7 @@
 <body>
 
     <nav class="navbar" style="position: fixed; top: 0; width: 100%; background: #000; padding: 15px; z-index: 1000; display:flex; justify-content:space-between; align-items:center;">
-        <a href="{% url 'index' %}" style="color: white; text-decoration: none; font-weight: bold; font-size: 1.5rem;">ComparAPP</a>
+        <a href="{% url 'index' %}" style="color: white; text-decoration: none; font-weight: bold; font-size: 1.5rem;">FOOD FINDER</a>
         
         <div style="color: white; margin-right: 50px; cursor: pointer;" id="cart-icon">
             🛒 <span id="cart-count">0</span>
@@ -63,19 +64,28 @@
                             <img src="{% static 'images/no-image.jpg' %}" alt="">
                         {% endif %}
                     </div>
-                    <div class="product-txt">
+                    <div class="product-txt" style="width: 100%; text-align: left;">
                         <h4>{{ p.nombre }}</h4>
                         <p>Calidad Premium</p>
-                        <span class="price">${{ p.precio }}</span>
                         
-                        <button class="btn-add add-to-cart" 
-                                data-id="{{ p.id }}" 
-                                data-name="{{ p.nombre }}" 
-                                data-price="{{ p.precio }}"
-                                style="background-color: #DB241B; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold;">
-                            Agregar al carrito
-                        </button>
-                    </div>
+                        <div class="vendor-options">
+                            <button class="btn-vendor add-to-cart" 
+                                    data-id="{{ p.id }}" data-name="{{ p.nombre }}" 
+                                    data-price="{{ p.precio_castano }}" data-vendor="Castaño">
+                                <span>Castaño</span><span>${{ p.precio_castano }}</span>
+                            </button>
+                            <button class="btn-vendor add-to-cart" 
+                                    data-id="{{ p.id }}" data-name="{{ p.nombre }}" 
+                                    data-price="{{ p.precio_foodtruck }}" data-vendor="Foodtruck">
+                                <span>Foodtruck</span><span>${{ p.precio_foodtruck }}</span>
+                            </button>
+                            <button class="btn-vendor add-to-cart" 
+                                    data-id="{{ p.id }}" data-name="{{ p.nombre }}" 
+                                    data-price="{{ p.precio_casino }}" data-vendor="Casino">
+                                <span>Casino</span><span>${{ p.precio_casino }}</span>
+                            </button>
+                        </div>
+                        </div>
                 </div>
                 {% endfor %}
             </div>
@@ -109,14 +119,19 @@
         <div class="qr-content">
             <span class="close-qr" id="close-qr">×</span>
             <h2>¡Escanea para pedir!</h2>
+            <p>Escanea este código para enviar tu pedido por WhatsApp:</p>
             <div id="qrcode-container"></div>
             <br>
-            <button class="btn-checkout" id="btn-finish-order">Cerrar</button>
+            <button class="btn-checkout" id="btn-finish-order">Cerrar y Limpiar Carrito</button>
         </div>
     </div>
 
+    <div id="toast">
+        <div id="img">✅</div>
+        <div id="desc">Producto agregado al carrito</div>
+    </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script> 
     <script src="{% static 'script.js' %}"></script>
 
 </body>
