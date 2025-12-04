@@ -11,7 +11,7 @@
         
         .catalogo-container {
             max-width: 1200px;
-            margin: 120px auto 50px auto; /* Margen arriba para no chocar con el menú */
+            margin: 120px auto 50px auto; 
             padding: 20px;
         }
 
@@ -24,14 +24,12 @@
             margin-bottom: 40px;
         }
 
-        /* Rejilla responsiva */
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Se adapta automáticamente */
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 30px;
         }
 
-        /* Tarjeta de producto (adaptada para grid) */
         .product-card {
             background-color: #151515;
             border: 1px solid #333;
@@ -41,6 +39,7 @@
             flex-direction: column;
             align-items: center;
             transition: transform 0.3s;
+            position: relative;
         }
 
         .product-card:hover {
@@ -51,7 +50,7 @@
         .product-card img {
             width: 100%;
             height: 200px;
-            object-fit: contain; /* Para que se vea la foto completa */
+            object-fit: contain;
             margin-bottom: 15px;
         }
 
@@ -70,29 +69,6 @@
             margin-bottom: 15px;
         }
 
-        .product-card .price {
-            font-size: 1.4rem;
-            color: #DB241B;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
-
-        .btn-add {
-            background-color: transparent;
-            border: 2px solid #DB241B;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-weight: bold;
-            text-transform: uppercase;
-            transition: background 0.3s;
-        }
-
-        .btn-add:hover {
-            background-color: #DB241B;
-        }
-
         .etiqueta-nuevo {
             background-color: #DB241B;
             color: white;
@@ -104,9 +80,6 @@
             left: 15px;
         }
         
-        /* Para que el position absolute funcione */
-        .product-card { position: relative; } 
-
     </style>
 </head>
 <body>
@@ -140,15 +113,24 @@
                 <h4>{{ p.nombre }}</h4>
                 <p>{{ p.categoria.nombre }}</p> 
                 
-                <span class="price">${{ p.precio }}</span>
-
-                <button class="btn-add add-to-cart" 
-                        data-id="{{ p.id }}" 
-                        data-name="{{ p.nombre }}" 
-                        data-price="{{ p.precio }}">
-                    Agregar al carrito
-                </button>
-            </div>
+                <div class="vendor-options">
+                    <button class="btn-vendor add-to-cart" 
+                            data-id="{{ p.id }}" data-name="{{ p.nombre }}" 
+                            data-price="{{ p.precio_castano }}" data-vendor="Castaño">
+                        <span>Castaño</span><span>${{ p.precio_castano }}</span>
+                    </button>
+                    <button class="btn-vendor add-to-cart" 
+                            data-id="{{ p.id }}" data-name="{{ p.nombre }}" 
+                            data-price="{{ p.precio_foodtruck }}" data-vendor="Foodtruck">
+                        <span>Foodtruck</span><span>${{ p.precio_foodtruck }}</span>
+                    </button>
+                    <button class="btn-vendor add-to-cart" 
+                            data-id="{{ p.id }}" data-name="{{ p.nombre }}" 
+                            data-price="{{ p.precio_casino }}" data-vendor="Casino">
+                        <span>Casino</span><span>${{ p.precio_casino }}</span>
+                    </button>
+                </div>
+                </div>
             {% endfor %}
         </div>
     </div>
@@ -159,11 +141,11 @@
             <h2>Tu Carrito</h2>
             <span class="close-cart" id="close-cart">×</span>
         </div>
-        <div class="cart-items" id="cart-items">
+        <div style="color: #000;" class="cart-items" id="cart-items">
             <p>Tu carrito está vacío</p>
         </div>
         <div class="cart-footer">
-            <h3>Total: $<span id="cart-total">0</span></h3>
+            <h3 style="color: #000;">Total: $<span style="color: #000;"id="cart-total">0</span></h3>
             <button class="btn-checkout">Pagar ahora</button>
         </div>
     </div>
@@ -172,9 +154,10 @@
         <div class="qr-content">
             <span class="close-qr" id="close-qr">×</span>
             <h2>¡Escanea para pedir!</h2>
+            <p>Escanea este código para enviar tu pedido por WhatsApp:</p>
             <div id="qrcode-container"></div>
             <br>
-            <button class="btn-checkout" id="btn-finish-order">Cerrar</button>
+            <button class="btn-checkout" id="btn-finish-order">Cerrar y Limpiar Carrito</button>
         </div>
     </div>
     

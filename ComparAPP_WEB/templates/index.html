@@ -24,9 +24,9 @@
             <nav class="navbar">
                 <div class="menu-1">
                     <ul>
-                        <li><a href="http://127.0.0.1:8000/#">Inicio</a></li>
+                        <li><a href="{% url 'index' %}">Inicio</a></li>
                         <li><a href="#">Servicios</a></li>
-                        <li><a href="{% url 'catalogo' %}">Productos</a>
+                        <li><a href="{% url 'catalogo' %}">Productos</a></li>
                     </ul>
                 </div>
                 <img class="logo-2" src="{% static 'images/logo_ComparAPP.png'%}" alt="">
@@ -134,9 +134,7 @@
                         <div class="swiper-slide">
                             <div class="product">
                                 <div class="product-img">
-                                    {% if p.nuevo %}
-                                    <h4>Nuevo</h4>
-                                    {% endif %}
+                                    {% if p.nuevo %}<h4>Nuevo</h4>{% endif %}
                                     {% if p.imagen %}
                                     <img src="{{ p.imagen.url }}" alt="{{ p.nombre }}">
                                     {% else %}
@@ -146,11 +144,24 @@
                                 <div class="product-txt">
                                     <h4>{{ p.nombre }}</h4>
                                     <p>Calidad Premium</p>
-                                    <span class="price">${{ p.precio }}</span>
-                                    <button class="btn-add add-to-cart" 
-                                            data-id="{{ p.id }}" 
-                                            data-name="{{ p.nombre }}" 
-                                            data-price="{{ p.precio }}">Agregar al carrito</button>
+                                    
+                                    <div class="vendor-options">
+                                        <button class="btn-vendor add-to-cart" 
+                                                data-id="{{ p.id }}" data-name="{{ p.nombre }}" 
+                                                data-price="{{ p.precio_castano }}" data-vendor="Castaño">
+                                            <span>Castaño:</span><span>${{ p.precio_castano }}</span>
+                                        </button>
+                                        <button class="btn-vendor add-to-cart" 
+                                                data-id="{{ p.id }}" data-name="{{ p.nombre }}" 
+                                                data-price="{{ p.precio_foodtruck }}" data-vendor="Foodtruck">
+                                            <span>Foodtruck:</span><span>${{ p.precio_foodtruck }}</span>
+                                        </button>
+                                        <button class="btn-vendor add-to-cart" 
+                                                data-id="{{ p.id }}" data-name="{{ p.nombre }}" 
+                                                data-price="{{ p.precio_casino }}" data-vendor="Casino">
+                                            <span>Casino:</span><span>${{ p.precio_casino }}</span>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -161,7 +172,7 @@
                 </div>
             </div>
 
-            <input type="radio" name="tabs" id="tab2" checked="checked" class="tabInput" value="2">
+            <input type="radio" name="tabs" id="tab2" class="tabInput" value="2">
             <label for="tab2">Dulceria</label>
             <div class="tab">
                 <div class="swiper mySwiper-2" id="swiper2">
@@ -170,9 +181,7 @@
                         <div class="swiper-slide">
                             <div class="product">
                                 <div class="product-img">
-                                    {% if p.nuevo %}
-                                    <h4>Nuevo</h4>
-                                    {% endif %}
+                                    {% if p.nuevo %}<h4>Nuevo</h4>{% endif %}
                                     {% if p.imagen %}
                                     <img src="{{ p.imagen.url }}" alt="{{ p.nombre }}">
                                     {% else %}
@@ -182,11 +191,23 @@
                                 <div class="product-txt">
                                     <h4>{{ p.nombre }}</h4>
                                     <p>Calidad Premium</p>
-                                    <span class="price">${{ p.precio }}</span>
-                                    <button class="btn-add add-to-cart" 
-                                            data-id="{{ p.id }}" 
-                                            data-name="{{ p.nombre }}"
-                                            data-price="{{ p.precio }}">Agregar al carrito</button>
+                                    <div class="vendor-options">
+                                        <button class="btn-vendor add-to-cart" 
+                                                data-id="{{ p.id }}" data-name="{{ p.nombre }}" 
+                                                data-price="{{ p.precio_castano }}" data-vendor="Castaño">
+                                            <span>Castaño:</span><span>${{ p.precio_castano }}</span>
+                                        </button>
+                                        <button class="btn-vendor add-to-cart" 
+                                                data-id="{{ p.id }}" data-name="{{ p.nombre }}" 
+                                                data-price="{{ p.precio_foodtruck }}" data-vendor="Foodtruck">
+                                            <span>Foodtruck:</span><span>${{ p.precio_foodtruck }}</span>
+                                        </button>
+                                        <button class="btn-vendor add-to-cart" 
+                                                data-id="{{ p.id }}" data-name="{{ p.nombre }}" 
+                                                data-price="{{ p.precio_casino }}" data-vendor="Casino">
+                                            <span>Casino:</span><span>${{ p.precio_casino }}</span>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div> 
@@ -197,7 +218,7 @@
                 </div>
             </div>
 
-            <input type="radio" name="tabs" id="tab3" checked="checked" class="tabInput" value="3">
+            <input type="radio" name="tabs" id="tab3" class="tabInput" value="3">
             <label for="tab3">Bebestibles</label>
             <div class="tab">
                 <div class="swiper mySwiper-2" id="swiper3">
@@ -206,9 +227,7 @@
                         <div class="swiper-slide">
                             <div class="product">
                                 <div class="product-img">
-                                    {% if p.nuevo %}
-                                    <h4>Nuevo</h4>
-                                    {% endif %}
+                                    {% if p.nuevo %}<h4>Nuevo</h4>{% endif %}
                                     {% if p.imagen %}
                                     <img src="{{ p.imagen.url }}" alt="{{ p.nombre }}">
                                     {% else %}
@@ -218,11 +237,23 @@
                                 <div class="product-txt">
                                     <h4>{{ p.nombre }}</h4>
                                     <p>Calidad Premium</p>
-                                    <span class="price">${{ p.precio }}</span>
-                                    <button class="btn-add add-to-cart" 
-                                            data-id="{{ p.id }}" 
-                                            data-name="{{ p.nombre }}"
-                                            data-price="{{ p.precio }}">Agregar al carrito</button>
+                                    <div class="vendor-options">
+                                        <button class="btn-vendor add-to-cart" 
+                                                data-id="{{ p.id }}" data-name="{{ p.nombre }}" 
+                                                data-price="{{ p.precio_castano }}" data-vendor="Castaño">
+                                            <span>Castaño:</span><span>${{ p.precio_castano }}</span>
+                                        </button>
+                                        <button class="btn-vendor add-to-cart" 
+                                                data-id="{{ p.id }}" data-name="{{ p.nombre }}" 
+                                                data-price="{{ p.precio_foodtruck }}" data-vendor="Foodtruck">
+                                            <span>Foodtruck:</span><span>${{ p.precio_foodtruck }}</span>
+                                        </button>
+                                        <button class="btn-vendor add-to-cart" 
+                                                data-id="{{ p.id }}" data-name="{{ p.nombre }}" 
+                                                data-price="{{ p.precio_casino }}" data-vendor="Casino">
+                                            <span>Casino:</span><span>${{ p.precio_casino }}</span>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -233,7 +264,7 @@
                 </div>
             </div>
 
-            <input type="radio" name="tabs" id="tab4" checked="checked" class="tabInput" value="4">
+            <input type="radio" name="tabs" id="tab4" class="tabInput" value="4">
             <label for="tab4">Sandwich</label>
             <div class="tab">
                 <div class="swiper mySwiper-2" id="swiper4">
@@ -242,9 +273,7 @@
                         <div class="swiper-slide">
                             <div class="product">
                                 <div class="product-img">
-                                    {% if p.nuevo %}
-                                    <h4>Nuevo</h4>
-                                    {% endif %}
+                                    {% if p.nuevo %}<h4>Nuevo</h4>{% endif %}
                                     {% if p.imagen %}
                                     <img src="{{ p.imagen.url }}" alt="{{ p.nombre }}">
                                     {% else %}
@@ -254,11 +283,23 @@
                                 <div class="product-txt">
                                     <h4>{{ p.nombre }}</h4>
                                     <p>Calidad Premium</p>
-                                    <span class="price">${{ p.precio }}</span>
-                                    <button class="btn-add add-to-cart" 
-                                            data-id="{{ p.id }}" 
-                                            data-name="{{ p.nombre }}"
-                                            data-price="{{ p.precio }}">Agregar al carrito</button>
+                                    <div class="vendor-options">
+                                        <button class="btn-vendor add-to-cart" 
+                                                data-id="{{ p.id }}" data-name="{{ p.nombre }}" 
+                                                data-price="{{ p.precio_castano }}" data-vendor="Castaño">
+                                            <span>Castaño:</span><span>${{ p.precio_castano }}</span>
+                                        </button>
+                                        <button class="btn-vendor add-to-cart" 
+                                                data-id="{{ p.id }}" data-name="{{ p.nombre }}" 
+                                                data-price="{{ p.precio_foodtruck }}" data-vendor="Foodtruck">
+                                            <span>Foodtruck:</span><span>${{ p.precio_foodtruck }}</span>
+                                        </button>
+                                        <button class="btn-vendor add-to-cart" 
+                                                data-id="{{ p.id }}" data-name="{{ p.nombre }}" 
+                                                data-price="{{ p.precio_casino }}" data-vendor="Casino">
+                                            <span>Casino:</span><span>${{ p.precio_casino }}</span>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div> 
@@ -268,18 +309,17 @@
                     <div class="swiper-button-prev"></div>
                 </div>
             </div>
-            <input type="radio" name="tabs" id="tab5" checked="checked" class="tabInput" value="5">
+
+            <input type="radio" name="tabs" id="tab5" class="tabInput" value="5">
             <label for="tab5">Galletas</label>
             <div class="tab">
                 <div class="swiper mySwiper-2" id="swiper5">
-                    <div class="swiper-wrapper">
+                    <div class="swiper-wrapper">    
                         {% for p in galletas %}
                         <div class="swiper-slide">
                             <div class="product">
                                 <div class="product-img">
-                                    {% if p.nuevo %}
-                                    <h4>Nuevo</h4>
-                                    {% endif %}
+                                    {% if p.nuevo %}<h4>Nuevo</h4>{% endif %}
                                     {% if p.imagen %}
                                     <img src="{{ p.imagen.url }}" alt="{{ p.nombre }}">
                                     {% else %}
@@ -289,14 +329,26 @@
                                 <div class="product-txt">
                                     <h4>{{ p.nombre }}</h4>
                                     <p>Calidad Premium</p>
-                                    <span class="price">${{ p.precio }}</span>
-                                    <button class="btn-add add-to-cart" 
-                                            data-id="{{ p.id }}" 
-                                            data-name="{{ p.nombre }}" 
-                                            data-price="{{ p.precio }}">Agregar al carrito</button>
+                                    <div class="vendor-options">
+                                        <button class="btn-vendor add-to-cart" 
+                                                data-id="{{ p.id }}" data-name="{{ p.nombre }}" 
+                                                data-price="{{ p.precio_castano }}" data-vendor="Castaño">
+                                            <span>Castaño:</span><span>${{ p.precio_castano }}</span>
+                                        </button>
+                                        <button class="btn-vendor add-to-cart" 
+                                                data-id="{{ p.id }}" data-name="{{ p.nombre }}" 
+                                                data-price="{{ p.precio_foodtruck }}" data-vendor="Foodtruck">
+                                            <span>Foodtruck:</span><span>${{ p.precio_foodtruck }}</span>
+                                        </button>
+                                        <button class="btn-vendor add-to-cart" 
+                                                data-id="{{ p.id }}" data-name="{{ p.nombre }}" 
+                                                data-price="{{ p.precio_casino }}" data-vendor="Casino">
+                                            <span>Casino:</span><span>${{ p.precio_casino }}</span>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> 
                         {% endfor %}  
                     </div>
                     <div class="swiper-button-next"></div>
@@ -308,64 +360,38 @@
     </main>
 
     <section class="info container">
-
         <div class="info-img">
             <img src="{% static 'images/benedictino.png'%}" alt="">
-
         </div>
-
         <div class="info-txt">
             <h2>Benedictino</h2>
-            <p>Benedictino: pureza y frescor que acompañan cada momento.
-            </p>
+            <p>Benedictino: pureza y frescor que acompañan cada momento.</p>
             <a href="#" class="btn-2">Mas Informacion</a>
         </div>
-
     </section>
 
     <section class="horario">
         <div class="horario-info container">
-
             <h2>Horario</h2>
             <div class="horario-txt">
                 <div class="txt">
                     <h4>Direccion</h4>
-                    <p>
-                        Inacap Maipú
-                    </p>
+                    <p>Inacap Maipú</p>
                 </div>
                 <div class="txt">
                     <h4>Horario</h4>
-                    <p>
-                        Lunes a Viernes : 9 am - 8 pm
-                    </p>
+                    <p>Lunes a Viernes : 9 am - 8 pm</p>
                 </div>
-
                 <div class="txt">
                     <h4>Telefono</h4>
-                    <p>
-                        +569 55555555
-                    </p>
+                    <p>+569 55555555</p>
                 </div>
-
                 <div class="txt">
                     <h4>Redes Sociales</h4>
                     <div class="socials">
-                        <a href="#">
-                            <div class="social">
-                                <img src="{% static 'images/s1.svg'%}" alt="">
-                            </div>
-                        </a>
-                        <a href="#">
-                            <div class="social">
-                                <img src="{% static 'images/s2.svg'%}" alt="">
-                            </div>
-                        </a>
-                        <a href="#">
-                            <div class="social">
-                                <img src="{% static 'images/s3.svg'%}" alt="">
-                            </div>
-                        </a>
+                        <a href="#"><div class="social"><img src="{% static 'images/s1.svg'%}" alt=""></div></a>
+                        <a href="#"><div class="social"><img src="{% static 'images/s2.svg'%}" alt=""></div></a>
+                        <a href="#"><div class="social"><img src="{% static 'images/s3.svg'%}" alt=""></div></a>
                     </div>
                 </div>
             </div>
@@ -379,7 +405,6 @@
     <footer class="footer-section">
         <div class="container">
             <div class="footer-content">
-                
                 <div class="footer-col">
                     <img src="{% static 'images/logo_ComparAPP.png' %}" alt="Food Finder Logo" class="footer-logo">
                     <p class="footer-text">
@@ -387,7 +412,6 @@
                         Calidad, rapidez y buen gusto en cada pedido.
                     </p>
                 </div>
-
                 <div class="footer-col">
                     <h4>Explorar</h4>
                     <ul>
@@ -401,7 +425,6 @@
                         {% endif %}
                     </ul>
                 </div>
-
                 <div class="footer-col">
                     <h4>Contacto</h4>
                     <ul>
@@ -411,7 +434,6 @@
                         <li><span>🕒</span> Lun - Vie: 9am - 8pm</li>
                     </ul>
                 </div>
-
                 <div class="footer-col">
                     <h4>Síguenos</h4>
                     <div class="social-links">
@@ -420,12 +442,10 @@
                         <a href="#"><img src="{% static 'images/s3.svg' %}" alt="Twitter"></a>
                     </div>
                 </div>
-
             </div>
         </div>
-
         <div class="footer-bottom">
-            <p>&copy; 2024 <strong>ComparAPP</strong>. Todos los derechos reservados.</p>
+            <p>© 2024 <strong>ComparAPP</strong>. Todos los derechos reservados.</p>
         </div>
     </footer>
 
@@ -449,9 +469,7 @@
             <span class="close-qr" id="close-qr">×</span>
             <h2>¡Escanea para pedir!</h2>
             <p>Escanea este código para enviar tu pedido por WhatsApp:</p>
-            
             <div id="qrcode-container"></div>
-            
             <br>
             <button class="btn-checkout" id="btn-finish-order">Cerrar y Limpiar Carrito</button>
         </div>
@@ -466,5 +484,4 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
     <script src="{% static 'script.js' %}"></script>
 </body>
-
 </html>

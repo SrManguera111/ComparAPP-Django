@@ -193,25 +193,6 @@ body {
     justify-content: center;
     align-items: center;
 }
-
-/* Caja blanca del QR */
-.qr-content {
-    background: white;
-    padding: 30px;
-    border-radius: 15px;
-    text-align: center;
-    position: relative;
-    max-width: 90%;
-    width: 350px;
-}
-
-/* El contenedor donde se dibuja el QR */
-#qrcode-container {
-    display: flex;
-    justify-content: center;
-    margin: 20px 0;
-}
-
 /* Botón de cerrar (X) */
 .close-qr {
     position: absolute;
@@ -226,6 +207,59 @@ body {
 /* Clase para mostrar el modal */
 .qr-overlay.active {
     display: flex;
+}
+
+/* Caja blanca del modal */
+.qr-content {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    position: relative;
+    max-width: 90%;
+    width: 400px; /* Un poco más ancho para que se vea cómodo */
+    display: flex;
+    flex-direction: column;
+    max-height: 90vh; /* Evita que el modal sea más alto que la pantalla */
+}
+
+/* El contenedor donde se dibujan los QRs */
+#qrcode-container {
+    display: flex;
+    flex-direction: column; /* <--- ESTO ES LA CLAVE: Uno debajo del otro */
+    align-items: center;    /* Centrados horizontalmente */
+    gap: 30px;              /* Espacio entre cada bloque de QR */
+    margin: 20px 0;
+    
+    /* Configuración del Scroll Vertical */
+    overflow-y: auto;       /* Scroll hacia abajo si no caben */
+    overflow-x: hidden;     /* Sin scroll lateral */
+    max-height: 400px;      /* Altura máxima fija para que aparezca la barra */
+    padding-right: 10px;    /* Espacio para que la barra no tape contenido */
+    width: 100%;
+}
+
+/* Estilo de cada bloque individual (Título + QR) */
+.qr-block {
+    border-bottom: 1px dashed #ccc; /* Línea separadora punteada */
+    padding-bottom: 20px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Quitamos la línea del último bloque para que se vea limpio */
+.qr-block:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.qr-block h3 {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    font-weight: 800;
+    text-transform: uppercase;
 }
 
 .navbar {
@@ -330,6 +364,49 @@ body {
 
 .botones{
     margin-top: 50px;
+}
+
+/* Contenedor de los 3 botones */
+.vendor-options {
+    display: flex;
+    flex-direction: column; /* Uno debajo del otro */
+    gap: 8px; /* Espacio entre botones */
+    margin-top: 15px;
+    width: 100%;
+}
+
+/* Estilo de cada botón de vendedor */
+.btn-vendor {
+    display: flex;
+    justify-content: space-between; /* Texto a la izquierda, precio a la derecha */
+    align-items: center;
+    background-color: transparent;
+    border: 1px solid #555;
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+/* Efecto al pasar el mouse (Hover) */
+.btn-vendor:hover {
+    background-color: #DB241B; /* Tu rojo */
+    border-color: #DB241B;
+    transform: translateX(5px); /* Pequeño movimiento a la derecha */
+}
+
+/* Negrita para el precio */
+.btn-vendor span:last-child {
+    font-weight: 700;
+    color: #DB241B;
+}
+
+.btn-vendor:hover span:last-child {
+    color: #fff; /* El precio se vuelve blanco al hacer hover */
 }
 
 .btn-1{
@@ -936,3 +1013,4 @@ body {
         gap: 10px;
     }
 }
+

@@ -4,7 +4,6 @@ from django.contrib.auth.models import User, AbstractUser
 # ==========================================
 # 1. PRODUCTOS Y CATEGORÍAS (Deben ir PRIMERO)
 # ==========================================
-# Python necesita leer esto antes para que 'DetalleOrden' sepa qué es un Producto.
 
 class Categoria(models.Model):
     nombre = models.CharField(max_length=50)
@@ -15,7 +14,13 @@ class Categoria(models.Model):
 class Producto(models.Model):
     nombre = models.CharField(max_length=100)
     descripcion = models.TextField(null=True, blank=True)
-    precio = models.IntegerField()
+    
+    # === CAMBIO: PRECIOS POR VENDEDOR ===
+    # Eliminamos 'precio' y agregamos los 3 específicos
+    precio_castano = models.IntegerField(default=0, verbose_name="Precio Castaño")
+    precio_foodtruck = models.IntegerField(default=0, verbose_name="Precio Foodtruck")
+    precio_casino = models.IntegerField(default=0, verbose_name="Precio Casino")
+    
     imagen = models.ImageField(upload_to='productos/', null=True, blank=True)
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE) 
     nuevo = models.BooleanField(default=False) 
@@ -38,7 +43,6 @@ class Orden(models.Model):
 
 class DetalleOrden(models.Model):
     orden = models.ForeignKey(Orden, related_name='items', on_delete=models.CASCADE)
-    # Ahora sí funciona, porque leyó la clase Producto arriba ↑
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
     cantidad = models.IntegerField(default=1)
     precio_al_momento = models.IntegerField() 
