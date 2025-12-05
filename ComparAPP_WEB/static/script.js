@@ -338,3 +338,19 @@ if (finishOrderBtn) {
         alert("¡Gracias por tu compra! Tu orden ha sido registrada.");
     });
 }
+
+// Función genérica para ir a comprar a CUALQUIER categoría
+function irAComprar(idPestana) {
+    
+    const tabSeleccionada = document.getElementById(idPestana);
+    
+    if (tabSeleccionada) {
+        tabSeleccionada.checked = true;
+        tabSeleccionada.dispatchEvent(new Event('change'));
+    }
+
+    const catalogo = document.getElementById('catalogo');
+    if (catalogo) {
+        catalogo.scrollIntoView({ behavior: 'smooth' });
+    }
+}

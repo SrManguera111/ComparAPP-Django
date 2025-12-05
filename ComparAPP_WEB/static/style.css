@@ -17,17 +17,24 @@ body {
     max-width: 1200px;
     margin: 0 auto;
 }
-.swiper-button-prev::after{ 
-    font-size: 25px;
+
+/* === ARREGLO DE FLECHAS DEL SLIDER === */
+.mySwiper-2 {
+    padding-left: 50px; 
+    padding-right: 50px;
+    box-sizing: border-box; 
 }
-.swiper-button-next::after{  
-    font-size: 25px;
-}
+.swiper-button-prev::after{ font-size: 25px; }
+.swiper-button-next::after{ font-size: 25px; }
 .swiper-button-next{  
+   right: 10px !important; 
    color: #DB241B;
+   font-weight: bold;
 }
 .swiper-button-prev{  
+    left: 10px !important; 
     color: #DB241B;
+    font-weight: bold;
 }
 .swiper-pagination-bullet{
     background-color: #D3D2D2;
@@ -51,7 +58,7 @@ body {
 .search-box {
     display: flex;
     align-items: center;
-    margin: 0 20px; /* Separación de los otros menús */
+    margin: 0 20px; 
 }
 
 .search-box form {
@@ -84,7 +91,6 @@ body {
 }
 
 /*NUEVO CARRITO*/
-/* Estilos para el icono del carrito en el menú */
 #cart-icon {
     cursor: pointer;
     font-size: 1.2rem;
@@ -99,22 +105,22 @@ body {
     vertical-align: top;
 }
 
-/* Carrito Lateral (oculto por defecto) */
+/* Carrito Lateral */
 .cart-sidebar {
     position: fixed;
     top: 0;
-    right: -400px; /* Fuera de la pantalla */
+    right: -400px; 
     width: 350px;
     height: 100%;
     background: white;
     box-shadow: -2px 0 5px rgba(0,0,0,0.5);
-    z-index: 1000;
+    z-index: 2000 !important; 
     transition: 0.3s;
     display: flex;
     flex-direction: column;
 }
 .cart-sidebar.active {
-    right: 0; /* Entra a la pantalla */
+    right: 0;
 }
 .cart-overlay {
     position: fixed;
@@ -123,7 +129,7 @@ body {
     width: 100%;
     height: 100%;
     background: rgba(0,0,0,0.5);
-    z-index: 999;
+    z-index: 1999 !important;
     display: none;
 }
 .cart-overlay.active {
@@ -171,29 +177,74 @@ body {
 .btn-checkout {
     width: 100%;
     padding: 15px;
-    background: #FF3C2A; /* Tu color naranja/rojo */
+    background: #FF3C2A; 
     color: white;
     border: none;
     font-size: 1.1rem;
     cursor: pointer;
     margin-top: 10px;
 }
-/*---------------------------------------------------------------*/
 
-/* Fondo oscuro del modal QR */
+/* QR MODAL (VERTICAL) */
 .qr-overlay {
-    display: none; /* Oculto por defecto */
+    display: none; 
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.8);
-    z-index: 2000; /* Por encima de todo */
+    z-index: 3000 !important; 
     justify-content: center;
     align-items: center;
 }
-/* Botón de cerrar (X) */
+.qr-overlay.active { display: flex; }
+
+.qr-content {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    position: relative;
+    max-width: 90%;
+    width: 400px; 
+    display: flex;
+    flex-direction: column;
+    max-height: 90vh; 
+}
+
+#qrcode-container {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;    
+    gap: 30px;              
+    margin: 20px 0;
+    overflow-y: auto;       
+    overflow-x: hidden;     
+    max-height: 400px;      
+    padding-right: 10px;    
+    width: 100%;
+}
+
+.qr-block {
+    border-bottom: 1px dashed #ccc; 
+    padding-bottom: 20px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.qr-block:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+.qr-block h3 {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
 .close-qr {
     position: absolute;
     top: 10px;
@@ -204,93 +255,27 @@ body {
     color: #333;
 }
 
-/* Clase para mostrar el modal */
-.qr-overlay.active {
-    display: flex;
-}
-
-/* Caja blanca del modal */
-.qr-content {
-    background: white;
-    padding: 30px;
-    border-radius: 15px;
-    text-align: center;
-    position: relative;
-    max-width: 90%;
-    width: 400px; /* Un poco más ancho para que se vea cómodo */
-    display: flex;
-    flex-direction: column;
-    max-height: 90vh; /* Evita que el modal sea más alto que la pantalla */
-}
-
-/* El contenedor donde se dibujan los QRs */
-#qrcode-container {
-    display: flex;
-    flex-direction: column; /* <--- ESTO ES LA CLAVE: Uno debajo del otro */
-    align-items: center;    /* Centrados horizontalmente */
-    gap: 30px;              /* Espacio entre cada bloque de QR */
-    margin: 20px 0;
-    
-    /* Configuración del Scroll Vertical */
-    overflow-y: auto;       /* Scroll hacia abajo si no caben */
-    overflow-x: hidden;     /* Sin scroll lateral */
-    max-height: 400px;      /* Altura máxima fija para que aparezca la barra */
-    padding-right: 10px;    /* Espacio para que la barra no tape contenido */
-    width: 100%;
-}
-
-/* Estilo de cada bloque individual (Título + QR) */
-.qr-block {
-    border-bottom: 1px dashed #ccc; /* Línea separadora punteada */
-    padding-bottom: 20px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-/* Quitamos la línea del último bloque para que se vea limpio */
-.qr-block:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
-}
-
-.qr-block h3 {
-    font-size: 1.2rem;
-    margin-bottom: 15px;
-    font-weight: 800;
-    text-transform: uppercase;
-}
-
+/* NAVBAR */
 .navbar {
-    display: flex;           /* Activa Flexbox */
-    justify-content: space-between; /* Distribuye el espacio: items a los extremos y centro */
-    align-items: center;     /* Alinea todo verticalmente al centro perfecta */
-    padding: 15px 5%;        /* Un poco de 'aire' a los lados y arriba/abajo */
-    background-color: #000;  /* Color de fondo (ajusta si es diferente) */
+    display: flex;           
+    justify-content: space-between; 
+    align-items: center;     
+    padding: 15px 2%;        
+    background-color: #000;  
     width: 100%;
-    box-sizing: border-box;  /* Evita que el padding agrande el ancho total */
+    box-sizing: border-box;  
 }
-.menu-1{
-    margin-right: 100px;
-}
-
+.menu-1{ margin-right: 20px; }
 .menu-2{
-    margin-left: 100px;
+    margin-left: 20px;
     display:flex;
     align-items: center;
+    gap: 15px;
 }
+.logo-1{ width: 0; }
+.logo-2{ width: 150px; }
 
-.logo-1{
-    width: 0;
-}
-.logo-2{
-    width: 150px;
-}
-
-.socials{
-    display: flex;
-}
+.socials{ display: flex; }
 .social{
     margin: 0 10px;
     height: 40px;
@@ -298,45 +283,29 @@ body {
     border: 1px solid #DB241B;
     border-radius: 50%;
 }
-.social:hover{
-    background-color: #DB241B;
-}
-.social img{
-    margin: 8px 0 0 10px;
-}
+.social:hover{ background-color: #DB241B; }
+.social img{ margin: 8px 0 0 10px; }
 
 .menu .navbar ul {
-    display: flex;          /* Pone los <li> en fila automáticamente */
-    list-style: none;       /* Quita los puntos de lista */
+    display: flex;          
+    list-style: none;       
     margin: 0;
     padding: 0;
-    gap: 2rem;              /* ESPACIO CLAVE: separa los enlaces entre sí uniformemente */
+    gap: 2rem;              
 }
-
 .menu .navbar ul li a {
-    text-decoration: none;  /* Quita el subrayado feo de los enlaces */
+    text-decoration: none;  
     color: #FFFFFF;
     font-size: 18px;
-    padding: 10px 15px;     /* Área clickeable más cómoda */
-    transition: color 0.3s ease; /* Suaviza el cambio de color al pasar el mouse */
+    padding: 10px 15px;     
+    transition: color 0.3s ease; 
     display: block;
 }
-.menu .navbar ul li a:hover{
-    color: #DB241B;
-}
+.menu .navbar ul li a:hover{ color: #DB241B; }
 
-#menu{
-    display: none;
-}
-
-.menu-icono{
-    width: 25px;
-}
-
-.menu label{
-    cursor: pointer;
-    display: none;
-}
+#menu{ display: none; }
+.menu-icono{ width: 25px; }
+.menu label{ cursor: pointer; display: none; }
 
 .header-content{
     margin-top: 200px;
@@ -361,53 +330,44 @@ body {
     font-size: 18px;
     color:#A7A7A7;
 }
+.botones{ margin-top: 50px; }
 
-.botones{
-    margin-top: 50px;
-}
-
-/* Contenedor de los 3 botones */
+/* ESTILOS DE BOTONES VENDEDOR */
 .vendor-options {
     display: flex;
-    flex-direction: column; /* Uno debajo del otro */
-    gap: 8px; /* Espacio entre botones */
-    margin-top: 15px;
+    flex-direction: column;
+    gap: 8px; 
+    margin-top: 10px;
     width: 100%;
 }
 
-/* Estilo de cada botón de vendedor */
 .btn-vendor {
     display: flex;
-    justify-content: space-between; /* Texto a la izquierda, precio a la derecha */
+    justify-content: space-between;
     align-items: center;
+    width: 100%;
+    padding: 8px 8px; 
     background-color: transparent;
-    border: 1px solid #555;
-    color: #fff;
-    padding: 8px 12px;
-    border-radius: 8px;
+    border: 2px solid #DB241B;
+    color: white;
+    border-radius: 20px;
     cursor: pointer;
     font-family: 'Poppins', sans-serif;
-    font-size: 0.9rem;
+    font-size: 13px; 
+    font-weight: 600;
     transition: all 0.3s ease;
-    width: 100%;
+    white-space: nowrap; 
 }
-
-/* Efecto al pasar el mouse (Hover) */
 .btn-vendor:hover {
-    background-color: #DB241B; /* Tu rojo */
-    border-color: #DB241B;
-    transform: translateX(5px); /* Pequeño movimiento a la derecha */
+    background-color: #DB241B;
+    color: white;
 }
-
-/* Negrita para el precio */
 .btn-vendor span:last-child {
     font-weight: 700;
     color: #DB241B;
+    margin-left: 5px; 
 }
-
-.btn-vendor:hover span:last-child {
-    color: #fff; /* El precio se vuelve blanco al hacer hover */
-}
+.btn-vendor:hover span:last-child { color: #fff; }
 
 .btn-1{
     display: inline-block;
@@ -420,30 +380,21 @@ body {
     margin-right: 20px;
     border-radius: 50px;
 }
-
-.btn-1:hover{
-   background-color: #DB241B;
-}
+.btn-1:hover{ background-color: #DB241B; }
  
-.slider-img{
-    width: 50%;
-}
-
+.slider-img{ width: 50%; }
 .slider-img img{
     margin-right: 225px;
     width: 550px;
 }
 
-.products{
-    background-color: #0d0d0d;
-}
+.products{ background-color: #0d0d0d; }
 
 .tabs{
     display: flex;
     flex-wrap: wrap;
     padding: 100px 0px;
 }
-
 .tabs label{
     width: 15%;
     order:1;
@@ -455,7 +406,6 @@ body {
     font-weight: 700; 
     transition: background ease 0.2s;
 }
-
 .tabs .tab{
     order:99;
     flex-grow: 1;
@@ -463,18 +413,12 @@ body {
     display: none;
     padding-top: 25px;
 }
-
-.tabs input[type="radio"]{
-    display: none;
-}
+.tabs input[type="radio"]{ display: none; }
 .tabs input[type="radio"]:checked + label{
     border-bottom: 2px solid #DB241B;
     color:#FFFFFF;
 }
-
-.tabs input[type="radio"]:checked + label + .tab {
-    display: block;
-}
+.tabs input[type="radio"]:checked + label + .tab { display: block; }
 
 .product{
     display: flex;
@@ -482,12 +426,7 @@ body {
     padding: 25px;
     margin: 0 10px;
 }
-
-.product-img{
-    width: 50%;
-    text-align: left;
-}
-
+.product-img{ width: 50%; text-align: left; }
 .product-img h4{
     display: inline-block;
     padding: 5px 7px;
@@ -500,18 +439,8 @@ body {
     border-radius: 10px;
     margin-bottom: 50px;
 }
-
-.product-img img{
-    width: 150px;
-    height: 120px;
-}
-
-.product-txt{
-    width: 50%;
-    margin-left: 10px;
-    text-align: left;
-}
-
+.product-img img{ width: 150px; height: 120px; }
+.product-txt{ width: 50%; margin-left: 10px; text-align: left; }
 .product-txt h4{
     color:#FFFFFF;
     font-size: 18px;
@@ -519,38 +448,16 @@ body {
     font-weight: 800;
     margin-bottom: 5px;
 }
-
-.product-txt p{
-    color: #A7A7A7;
-    font-size: 16px;
-    margin-bottom: 15px;
-}
-
-.product-txt span{
-    color: #FFFFFF;
-    font-size: 18px;
-    font-weight: 800;
-}
+.product-txt p{ color: #A7A7A7; font-size: 16px; margin-bottom: 15px; }
 
 .info{
     padding: 100px 0px;
     display: flex;
     align-items: center;
 }
-
-.info-img {
-    width: 50%;
-}
-
-.info-img img{
-    width: 350px;
-    height: 350px;
-}
-
-.info-txt {
-    width: 50%;
-}
-
+.info-img { width: 50%; }
+.info-img img{ width: 350px; height: 350px; }
+.info-txt { width: 50%; }
 .info-txt h2 {
     font-size: 75px;
     color: #FFFFFF;
@@ -558,12 +465,7 @@ body {
     text-transform: uppercase;
     margin-bottom: 25px;
 }
-
-.info-txt p {
-    font-size: 18px;
-    color:#A7A7A7;
-    margin-bottom: 50px;
-}
+.info-txt p { font-size: 18px; color:#A7A7A7; margin-bottom: 50px; }
 
 .btn-2 {
     display: inline-block;
@@ -574,16 +476,12 @@ body {
     text-transform: uppercase;
     border-radius: 50px;
 }
-
-.btn-2:hover {
-    background-color: #ab1c15;
-}
+.btn-2:hover { background-color: #ab1c15; }
 
 .horario {
     padding: 100px 0px;
     background-color: #0d0d0d;
 }
-
 .horario-info h2 {
     font-size: 75px;
     color:#FFFFFF;
@@ -591,37 +489,24 @@ body {
     text-transform: uppercase;
     margin-bottom: 50px;
 }
-
-.horario-txt {
-    display: flex;
-    justify-content: space-between;
-}
-
-.txt{
-    color: #FFFFFF;
-}
-
+.horario-txt { display: flex; justify-content: space-between; }
+.txt{ color: #FFFFFF; }
 .txt h4{
     font-size: 18px;
     color:#A7A7A7;
     margin-bottom: 30px;
 }
-
 .txt p {
     font-size: 18px;
     text-transform: uppercase;
     font-weight: 600;
     margin-bottom: 15px;
 }
-
 .map{
     filter: grayscale(100%) invert(92%) contrast(93%);
 }
 
-/* ===================================================== */
-/* === NUEVOS ESTILOS DEL FOOTER  === */
-/* ===================================================== */
-
+/* FOOTER ESTILOS */
 .footer-section {
     background-color: #0a0a0a;
     padding: 70px 0 0 0;
@@ -630,7 +515,6 @@ body {
     margin-top: 50px;
     border-top: 1px solid #222;
 }
-
 .footer-content {
     display: flex;
     flex-wrap: wrap;
@@ -638,22 +522,9 @@ body {
     gap: 30px;
     padding-bottom: 50px;
 }
-
-.footer-col {
-    flex: 1;
-    min-width: 200px;
-}
-
-.footer-logo {
-    max-width: 150px;
-    margin-bottom: 20px;
-}
-.footer-text {
-    font-size: 14px;
-    line-height: 1.6;
-    color: #888;
-}
-
+.footer-col { flex: 1; min-width: 200px; }
+.footer-logo { max-width: 150px; margin-bottom: 20px; }
+.footer-text { font-size: 14px; line-height: 1.6; color: #888; }
 .footer-col h4 {
     font-size: 18px;
     color: #ffffff;
@@ -663,7 +534,6 @@ body {
     position: relative;
     padding-bottom: 10px;
 }
-
 .footer-col h4::after {
     content: '';
     position: absolute;
@@ -674,16 +544,8 @@ body {
     width: 50px;
     box-sizing: border-box;
 }
-
-.footer-col ul {
-    list-style: none;
-    padding: 0;
-}
-
-.footer-col ul li {
-    margin-bottom: 10px;
-}
-
+.footer-col ul { list-style: none; padding: 0; }
+.footer-col ul li { margin-bottom: 10px; }
 .footer-col ul li a, .footer-col ul li span {
     font-size: 15px;
     text-decoration: none;
@@ -691,17 +553,9 @@ body {
     transition: all 0.3s ease;
     display: block;
 }
+.footer-col ul li a:hover { color: #DB241B; padding-left: 8px; }
 
-.footer-col ul li a:hover {
-    color: #DB241B;
-    padding-left: 8px;
-}
-
-.social-links {
-    display: flex;
-    gap: 15px;
-}
-
+.social-links { display: flex; gap: 15px; }
 .social-links a {
     display: inline-block;
     height: 40px;
@@ -712,49 +566,38 @@ body {
     line-height: 40px;
     transition: all 0.3s ease;
 }
-
 .social-links a img {
     width: 20px;
     height: 20px;
     vertical-align: middle;
-    filter: invert(1); /* Vuelve blancos los iconos negros */
+    filter: invert(1); 
 }
-
 .social-links a:hover {
     background-color: #DB241B;
     transform: translateY(-3px);
 }
-
 .footer-bottom {
     background-color: #000000;
     padding: 20px;
     text-align: center;
     border-top: 1px solid #1a1a1a;
 }
+.footer-bottom p { font-size: 14px; margin: 0; color: #666; }
+.footer-bottom strong { color: #DB241B; }
 
-.footer-bottom p {
-    font-size: 14px;
-    margin: 0;
-    color: #666;
-}
-
-.footer-bottom strong {
-    color: #DB241B;
-}
-
-/* === ESTILOS DEL TOAST (NOTIFICACIÓN) === */
+/* TOAST */
 #toast {
-    visibility: hidden; /* Oculto por defecto */
+    visibility: hidden; 
     min-width: 250px;
-    background-color: #1E1E1E; /* Fondo oscuro */
-    color: #fff; /* Texto blanco */
+    background-color: #1E1E1E; 
+    color: #fff; 
     text-align: center;
-    border-radius: 50px; /* Bordes redondeados */
+    border-radius: 50px; 
     padding: 16px;
     position: fixed;
-    z-index: 3000; /* Por encima de todo */
+    z-index: 3000; 
     right: 30px;
-    bottom: 30px; /* Aparece abajo a la derecha */
+    bottom: 30px; 
     font-size: 17px;
     box-shadow: 0px 4px 15px rgba(0,0,0,0.5);
     border: 1px solid #333;
@@ -763,20 +606,10 @@ body {
     justify-content: center;
     gap: 10px;
     opacity: 0;
-    transition: opacity 0.5s, bottom 0.5s; /* Animación suave */
+    transition: opacity 0.5s, bottom 0.5s; 
 }
-
-/* Clase que activa el toast */
-#toast.show {
-    visibility: visible;
-    opacity: 1;
-    bottom: 50px; /* Se mueve un poquito hacia arriba al aparecer */
-}
-
-/* El icono del check */
-#img {
-    font-size: 20px;
-}
+#toast.show { visibility: visible; opacity: 1; bottom: 50px; }
+#img { font-size: 20px; }
 
 /* ===================================================== */
 /* MEDIA QUERIES (Responsividad) */
@@ -790,7 +623,6 @@ body {
         align-items: center;
     }
 
-    /* MENU 2 (Login/Carrito) EN CELULAR: Ahora es VISIBLE */
     .menu-2 {
         display: block; 
         margin-left: 0;
@@ -804,213 +636,90 @@ body {
         align-items: center;
     }
 
-    .logo-1 {
-        width: 100px;
-    }
+    .logo-1 { width: 100px; }
+    .logo-2 { display: none; }
+    .menu label { display: initial; }
 
-    /* Ocultamos el logo duplicado dentro del menú desplegable */
-    .logo-2 {
-        display: none; 
-    }
-
-    .menu label {
-        display: initial;
-    }
-
-    /* Ajustes del contenedor desplegable */
     .menu .navbar {
         position: absolute;
         top:100%;
         left: 0;
         right: 0;
-        background-color: #000000; /* Fondo negro */
+        background-color: #000000; 
         display: none;
         flex-direction: column;
         padding: 20px;
         border-top: 1px solid #333;
     }
 
-    .menu-1 {
-        margin-right: 0;
-        width: 100%;
-        text-align: center;
-    }
+    .menu-1 { margin-right: 0; width: 100%; text-align: center; }
+    .menu .navbar ul { flex-direction: column; gap: 10px; }
+    .menu .navbar ul li { width: 100%; }
 
-    .menu .navbar ul {
-        flex-direction: column;
-        gap: 10px;
-    }
+    #menu:checked ~ .navbar { display: flex; }
 
-    .menu .navbar ul li {
-        width: 100%;
-    }
+    .search-box { margin: 20px 0; width: 100%; justify-content: center; }
+    .search-box form, .search-box input { width: 100%; }
 
-    /* Esto hace aparecer el menú */
-    #menu:checked ~ .navbar {
-        display: flex; 
-    }
+    .header-content { padding: 30px; margin-top: 100px; }
+    .slider { flex-direction: column; }
+    .slider-txt { margin-left: 0; width: 100%; text-align: center; margin-bottom: 50px; }
+    .slider-txt h1 { font-size: 50px; }
+    .slider-txt p { font-size: 16px; }
 
-    /* Ajustes del Buscador en celular */
-    .search-box {
-        margin: 20px 0;
-        width: 100%;
-        justify-content: center;
-    }
-    
-    .search-box form, .search-box input {
-        width: 100%;
-    }
-
-    /* --- RESTO DE ESTILOS RESPONSIVOS (Slider, Info, etc) --- */
-
-    .header-content {
-        padding: 30px;
-        margin-top: 100px;
-    }
-
-    .slider {
-        flex-direction: column;
-    }
-
-    .slider-txt {
-        margin-left: 0;
-        width: 100%;
-        text-align: center;
-        margin-bottom: 50px;
-    }
-
-    .slider-txt h1 {
-        font-size: 50px;
-    }
-
-    .slider-txt p {
-        font-size: 16px;
-    }
-
-    .btn-1 {
-        padding: 10px 25px;
-        font-size: 14px;
-    }
-
-    .slider-img {
-        width: 100%;
-        text-align: center;
-    }
-
-    .slider-img img {
-        margin-right: 0px;
-        width: 300px;
-    }
+    .btn-1 { padding: 10px 25px; font-size: 14px; }
+    .slider-img { width: 100%; text-align: center; }
+    .slider-img img { margin-right: 0px; width: 300px; }
 
     .swiper-horizontal > .swiper-pagination-bullets,
     .swiper-pagination-bullets,.swiper-pagination-horizontal,
     .swiper-pagination-custom,
-    .swiper-pagination-fraction{
-        bottom: -7px;
-    }
+    .swiper-pagination-fraction{ bottom: -7px; }
 
-    .tabs {
-        padding: 50px 30px;
-    }
+    .tabs { padding: 50px 30px; }
+    .tabs label { width: 33%; }
 
-    .tabs label {
-        width: 33%;
-    }
+    .info { padding: 30px; flex-direction: column; }
+    .info-img { width: 100%; text-align: center; }
+    .info-img img { width: 400px; height: 200px; margin-bottom: 25px; }
+    .info-txt { width: 100%; text-align: center; }
+    .info-txt h2 { font-size: 50px; }
+    .info-txt p { font-size: 16px; }
 
-    .info {
-        padding: 30px;
-        flex-direction: column;
-    }
+    .btn-1 { font-size: 16px; }
 
-    .info-img {
-        width: 100%;
-        text-align: center;
-    }
+    .horario { padding: 30px; text-align: center; }
+    .horario-info h2 { font-size: 50px; margin-bottom: 15px; }
+    .horario-txt { flex-direction: column; }
 
-    .info-img img {
-        width: 400px;
-        height: 200px;
-        margin-bottom: 25px;
-    }
-
-    .info-txt {
-        width: 100%;
-        text-align: center;
-    }
-
-    .info-txt h2 {
-        font-size: 50px;
-    }
-
-    .info-txt p {
-        font-size: 16px;
-    }
-
-    .btn-1 {
-        font-size: 16px;
-    }
-
-    .horario {
-        padding: 30px;
-        text-align: center;
-    }
-
-    .horario-info h2 {
-        font-size: 50px;
-        margin-bottom: 15px;
-    }
-
-    .horario-txt {
-        flex-direction: column;
-    }
-
-    .socials {
-        justify-content: center;
-    }
-
-    .social img {
-        margin: 8px 0 0 0;
-    }
+    .socials { justify-content: center; }
+    .social img { margin: 8px 0 0 0; }
 }
 
 /* Responsividad específica para el Footer Nuevo (CENTRADITO) */
 @media(max-width: 768px){
-    /* 1. Ponemos las columnas una debajo de otra */
     .footer-col {
         flex: 100%;
         width: 100%;
         margin-bottom: 40px;
     }
+    .footer-content { text-align: center; }
+    .footer-logo { margin-left: auto; margin-right: auto; }
+    .social-links { justify-content: center; margin-top: 10px; }
+    .footer-col h4::after { left: 50%; transform: translateX(-50%); }
+    .footer-col ul li { display: flex; justify-content: center; align-items: center; gap: 10px; }
+}
 
-    /* 2. Centramos todo el texto */
-    .footer-content {
-        text-align: center;
-    }
-
-    /* 3. Centramos el Logo */
-    .footer-logo {
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    /* 4. Centramos los iconos de redes sociales */
-    .social-links {
-        justify-content: center;
-        margin-top: 10px;
-    }
-
-    /* 5. Centramos la línea roja decorativa */
-    .footer-col h4::after {
-        left: 50%;
-        transform: translateX(-50%);
-    }
-    
-    /* 6. Centramos los items de contacto */
-    .footer-col ul li {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
+/* AJUSTE DE BOTONES EN CELULARES PEQUEÑOS */
+@media(max-width: 500px) {
+    .btn-vendor {
+        padding: 8px 5px !important;
+        font-size: 0.75rem !important; 
     }
 }
 
+/* Corrección de color texto carrito */
+.cart-item-info h4 { color: #000000 !important; font-weight: 600; }
+.cart-item-info p { color: #333333 !important; }
+.cart-items p { color: #000000 !important; }
+.cart-footer h3 { color: #000000 !important; }
