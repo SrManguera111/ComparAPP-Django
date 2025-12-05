@@ -185,6 +185,49 @@ body {
     margin-top: 10px;
 }
 
+/* ========================================= */
+/* CONTROLES DE CANTIDAD EN EL CARRITO       */
+/* ========================================= */
+
+.cart-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 5px 0;
+}
+
+.btn-qty {
+    background-color: #333;
+    color: white;
+    border: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%; /* Círculos */
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+
+.btn-qty:hover {
+    background-color: #DB241B; /* Rojo al pasar el mouse */
+}
+
+.qty-text {
+    font-weight: bold;
+    font-size: 14px;
+    color: #000; /* Texto negro */
+}
+
+/* Ajuste para que el precio unitario se vea bien abajo */
+.unit-price {
+    font-size: 12px;
+    color: #666 !important;
+}
+
 /* QR MODAL (VERTICAL) */
 .qr-overlay {
     display: none; 

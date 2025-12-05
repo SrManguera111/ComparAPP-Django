@@ -19,6 +19,7 @@ const finishOrderBtn = document.getElementById('btn-finish-order');
 // ==========================================
 // CONFIGURACIÓN DE NÚMEROS WHATSAPP (POR LOCAL)
 // ==========================================
+// IMPORTANTE: Los nombres aquí deben coincidir con el data-vendor en tu HTML
 const numerosWSP = {
     "Castaño":   "56991399444",  
     "Foodtruck": "56998658056",  
@@ -65,12 +66,20 @@ function updateCart() {
 
         const cartItem = document.createElement('div');
         cartItem.classList.add('cart-item');
+        // Incluimos los botones + y -
         cartItem.innerHTML = `
             <div class="cart-item-info">
                 <h4>${item.name}</h4>
-                <p>$${item.price} x ${item.quantity} = $${item.price * item.quantity}</p>
+                
+                <div class="cart-controls" style="display:flex; gap:10px; align-items:center; margin:5px 0;">
+                    <button class="btn-qty decrease" data-index="${index}" style="width:25px; height:25px; border-radius:50%; border:none; background:#333; color:white; cursor:pointer;">-</button>
+                    <span class="qty-text" style="font-weight:bold;">${item.quantity}</span>
+                    <button class="btn-qty increase" data-index="${index}" style="width:25px; height:25px; border-radius:50%; border:none; background:#333; color:white; cursor:pointer;">+</button>
+                </div>
+
+                <p style="font-size:12px; color:#666;">Precio: $${item.price} c/u</p>
             </div>
-            <span class="cart-item-remove" data-index="${index}">×</span>
+            <span class="cart-item-remove" data-index="${index}" style="color:red; cursor:pointer; font-weight:bold;">×</span>
         `;
         cartItemsContainer.appendChild(cartItem);
     });
@@ -81,13 +90,34 @@ function updateCart() {
     localStorage.setItem('cart', JSON.stringify(cart));
     
     if (cart.length === 0) {
-        cartItemsContainer.innerHTML = '<p>Tu carrito está vacío</p>';
+        cartItemsContainer.innerHTML = '<p style="color:black;">Tu carrito está vacío</p>';
     }
+
+    // Eventos Botones + / - / Eliminar
+    document.querySelectorAll('.decrease').forEach(button => {
+        button.addEventListener('click', (e) => {
+            const index = e.target.dataset.index;
+            if (cart[index].quantity > 1) {
+                cart[index].quantity -= 1;
+            } else {
+                cart.splice(index, 1);
+            }
+            updateCart();
+        });
+    });
+
+    document.querySelectorAll('.increase').forEach(button => {
+        button.addEventListener('click', (e) => {
+            const index = e.target.dataset.index;
+            cart[index].quantity += 1;
+            updateCart();
+        });
+    });
 
     document.querySelectorAll('.cart-item-remove').forEach(button => {
         button.addEventListener('click', (e) => {
-            const indexToRemove = e.target.dataset.index;
-            cart.splice(indexToRemove, 1);
+            const index = e.target.dataset.index;
+            cart.splice(index, 1);
             updateCart();
         });
     });
@@ -284,8 +314,8 @@ function generarMultiplesQR(cart, ordenId) {
 
         mensaje += `\nTOTAL A PAGAR: $${subtotalVendedor.toLocaleString('es-CL')}`;
 
-        // === CORRECCIÓN AQUÍ ===
-        // Seleccionamos el número correcto
+        // === CORRECCIÓN AQUI ===
+        // Usamos el objeto numerosWSP correctamente
         const numeroDestino = numerosWSP[vendedor] || numerosWSP["General"];
 
         const bloqueQR = document.createElement('div');
@@ -304,8 +334,7 @@ function generarMultiplesQR(cart, ordenId) {
         bloqueQR.appendChild(divParaElQR);
         qrContainer.appendChild(bloqueQR);
 
-        // === CORRECCIÓN AQUÍ TAMBIÉN ===
-        // Usamos 'numeroDestino' en lugar de la variable antigua
+        // Generar el QR con el número correcto
         const linkWhatsApp = `https://wa.me/${numeroDestino}?text=${encodeURIComponent(mensaje)}`;
         
         new QRCode(divParaElQR, {
@@ -340,8 +369,8 @@ if (finishOrderBtn) {
 }
 
 // Función genérica para ir a comprar a CUALQUIER categoría
+// (Para los botones del banner principal)
 function irAComprar(idPestana) {
-    
     const tabSeleccionada = document.getElementById(idPestana);
     
     if (tabSeleccionada) {
