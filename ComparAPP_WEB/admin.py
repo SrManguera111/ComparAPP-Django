@@ -1,10 +1,10 @@
 from django.contrib import admin
 from .models import Categoria, Producto, Orden, DetalleOrden, Task
 
-# 1. Categorías (Registro simple)
+#  Categorías (Registro simple)
 admin.site.register(Categoria)
 
-# 2. Productos (CONFIGURACIÓN NUEVA: Para ver los 3 precios)
+#  Productos 
 class ProductoAdmin(admin.ModelAdmin):
     # Aquí definimos las columnas que se ven en la lista
     list_display = ('nombre', 'categoria', 'precio_castano', 'precio_foodtruck', 'precio_casino')
@@ -15,21 +15,21 @@ class ProductoAdmin(admin.ModelAdmin):
 
 admin.site.register(Producto, ProductoAdmin)
 
-# 3. Tasks (Lo que ya tenías)
+#  Tasks 
 @admin.register(Task)
 class TaskAdmin(admin.ModelAdmin):
     list_display = ['title']
 
-# =================================================
-# 4. CONFIGURACIÓN DE ÓRDENES (CARRITO)
-# =================================================
 
-# Esto permite ver los productos DENTRO de la orden
+# CONFIGURACIÓN DE ÓRDENES 
+
+
+
 class DetalleOrdenInline(admin.TabularInline):
     model = DetalleOrden
-    extra = 0  # No muestra filas vacías extra
-    readonly_fields = ('producto', 'cantidad', 'precio_al_momento') # Para que no se editen por error
-    can_delete = False # Para no borrar historial accidentalmente
+    extra = 0  
+    readonly_fields = ('producto', 'cantidad', 'precio_al_momento') 
+    can_delete = False 
 
 # Esto configura la lista principal de órdenes
 class OrdenAdmin(admin.ModelAdmin):

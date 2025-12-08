@@ -7,12 +7,11 @@ from django.views.decorators.csrf import csrf_exempt # Para facilitar la recepci
 from django.contrib.auth.decorators import login_required # Para proteger la compra
 
 
-# Importamos tus modelos (Asegúrate de que Orden y DetalleOrden estén en models.py)
 from .models import Producto, Orden, DetalleOrden
 
-# ==========================================
+
 # VISTAS DE NAVEGACIÓN Y PRODUCTOS
-# ==========================================
+
 
 def Index(request):
     # Filtramos los productos por categoría
@@ -34,9 +33,9 @@ def Index(request):
 def nosotros(request):
     return render(request, 'nosotros.html')
 
-# ==========================================
+
 # VISTAS DE USUARIOS (LOGIN / REGISTRO)
-# ==========================================
+
 
 def iniciar_sesion(request):
     if request.method == 'POST':
@@ -81,50 +80,80 @@ def crear_cuenta(request):
         return redirect('iniciar_sesion')
     return render(request, 'crear_cuenta.html')
 
-# ==========================================
-# NUEVA VISTA: PROCESAR ORDEN (CARRITO)
-# ==========================================
 
-@csrf_exempt 
-@login_required(login_url='iniciar_sesion') # Si el usuario no está logueado, lo manda al login
+# PROCESAR ORDEN (CON STOCK)
+
+
+@login_required(login_url='iniciar_sesion')
+@csrf_exempt
 def procesar_orden(request):
     if request.method == 'POST':
         try:
-            # 1. Obtener los datos enviados por JS (carrito y total)
             data = json.loads(request.body)
             carrito = data.get('carrito', [])
-            total_cliente = data.get('total', 0)
+            total = data.get('total', 0)
 
-            # 2. Crear la Orden principal vinculada al usuario actual
-            nueva_orden = Orden.objects.create(
-                usuario=request.user, 
-                total=total_cliente
+            # Crear la Orden General
+            orden = Orden.objects.create(
+                usuario=request.user,
+                total=total
             )
 
-            # 3. Crear los detalles (items) de esa orden
+            # Recorrer el carrito para guardar detalles y RESTAR STOCK
             for item in carrito:
-                producto = Producto.objects.get(id=item['id'])
-                DetalleOrden.objects.create(
-                    orden=nueva_orden,
-                    producto=producto,
-                    cantidad=item['quantity'],
-                    precio_al_momento=item['price']
-                )
-            
-            # Respondemos "success" y el ID de la orden para usarlo en el QR
-            return JsonResponse({'status': 'success', 'orden_id': nueva_orden.id})
+                producto_id = item.get('id')
+                cantidad = int(item.get('quantity', 1))
+                vendedor = item.get('vendor') 
+                precio = item.get('price')
 
+                # Obtener el producto real de la base de datos
+                producto_db = Producto.objects.get(id=producto_id)
+
+                # --- LÓGICA DE STOCK ---
+                if vendedor == "Castaño":
+                    if producto_db.stock_castano >= cantidad:
+                        producto_db.stock_castano -= cantidad
+                    else:
+                        return JsonResponse({'status': 'error', 'message': f'Sin stock suficiente en Castaño para: {producto_db.nombre}'})
+                
+                elif vendedor == "Foodtruck":
+                    if producto_db.stock_foodtruck >= cantidad:
+                        producto_db.stock_foodtruck -= cantidad
+                    else:
+                        return JsonResponse({'status': 'error', 'message': f'Sin stock suficiente en Foodtruck para: {producto_db.nombre}'})
+
+                elif vendedor == "Casino":
+                    if producto_db.stock_casino >= cantidad:
+                        producto_db.stock_casino -= cantidad
+                    else:
+                        return JsonResponse({'status': 'error', 'message': f'Sin stock suficiente en Casino para: {producto_db.nombre}'})
+                
+                # Guardar el nuevo stock en la BD
+                producto_db.save()
+
+                DetalleOrden.objects.create(
+                    orden=orden,
+                    producto=producto_db,
+                    cantidad=cantidad,
+                    precio_unitario=precio,  
+                    subtotal=precio * cantidad
+                )
+
+            return JsonResponse({'status': 'success', 'orden_id': orden.id})
+
+        except Producto.DoesNotExist:
+             return JsonResponse({'status': 'error', 'message': 'Un producto no fue encontrado'})
         except Exception as e:
-            # Si algo falla, enviamos el error para verlo en consola
             return JsonResponse({'status': 'error', 'message': str(e)})
 
     return JsonResponse({'status': 'error', 'message': 'Método no permitido'})
 
-#Para poder ver el historial de usuario
+
+# VISTAS DE HISTORIAL Y PERFIL
+
 @login_required(login_url='iniciar_sesion')
 def historial(request):
-    # 1. Buscamos las órdenes del usuario logueado
-    # order_by('-fecha_creacion') hace que salgan las más nuevas primero
+    # Buscamos las órdenes del usuario logueado
     mis_ordenes = Orden.objects.filter(usuario=request.user).order_by('-fecha_creacion')
     
     return render(request, 'historial.html', {
@@ -132,12 +161,10 @@ def historial(request):
     })
 
 def buscar(request):
-    query = request.GET.get('q') # Obtenemos lo que escribió el usuario en el input 'q'
+    query = request.GET.get('q') # Obtenemos lo que escribió el usuario
     resultados = []
 
     if query:
-        # Aquí ocurre la magia: __icontains busca coincidencias parciales
-        # Buscamos por nombre del producto
         resultados = Producto.objects.filter(nombre__icontains=query)
     
     return render(request, 'resultados.html', {
@@ -147,30 +174,23 @@ def buscar(request):
 
 @login_required(login_url='iniciar_sesion')
 def perfil(request):
-    user = request.user # Obtenemos al usuario actual
+    user = request.user 
 
     if request.method == 'POST':
-        # Recibimos los datos del formulario
         user.first_name = request.POST.get('nombre')
         user.last_name = request.POST.get('apellido')
         user.email = request.POST.get('email')
         
-        # Guardamos en la base de datos
         user.save()
         
-        # Mostramos mensaje de éxito
         return render(request, 'perfil.html', {
             'mensaje': '¡Datos actualizados correctamente!'
         })
 
-    # Si no es POST, mostramos la página normal
     return render(request, 'perfil.html')
 
 def catalogo_completo(request):
-    # 1. Traemos todos los productos sin filtrar por categoría
     productos = Producto.objects.all()
-    
-    # 2. Enviamos la lista a la nueva plantilla
     return render(request, 'productos.html', {
         'productos': productos
     })

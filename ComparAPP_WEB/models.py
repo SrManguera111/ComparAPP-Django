@@ -1,9 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User, AbstractUser
 
-# ==========================================
-# 1. PRODUCTOS Y CATEGORÍAS (Deben ir PRIMERO)
-# ==========================================
+
+# PRODUCTOS Y CATEGORÍAS 
+
 
 class Categoria(models.Model):
     nombre = models.CharField(max_length=50)
@@ -15,11 +15,14 @@ class Producto(models.Model):
     nombre = models.CharField(max_length=100)
     descripcion = models.TextField(null=True, blank=True)
     
-    # === CAMBIO: PRECIOS POR VENDEDOR ===
-    # Eliminamos 'precio' y agregamos los 3 específicos
+    # PRECIOS POR VENDEDOR 
     precio_castano = models.IntegerField(default=0, verbose_name="Precio Castaño")
     precio_foodtruck = models.IntegerField(default=0, verbose_name="Precio Foodtruck")
     precio_casino = models.IntegerField(default=0, verbose_name="Precio Casino")
+
+    stock_castano = models.IntegerField(default=0, verbose_name="Stock Castaño")
+    stock_foodtruck = models.IntegerField(default=0, verbose_name="Stock Foodtruck")
+    stock_casino = models.IntegerField(default=0, verbose_name="Stock Casino")
     
     imagen = models.ImageField(upload_to='productos/', null=True, blank=True)
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE) 
@@ -28,9 +31,8 @@ class Producto(models.Model):
     def __str__(self):
         return self.nombre
 
-# ==========================================
-# 2. ORDENES (Deben ir DESPUÉS de productos)
-# ==========================================
+
+# ORDENES 
 
 class Orden(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE) 
@@ -50,9 +52,7 @@ class DetalleOrden(models.Model):
     def __str__(self):
         return f"{self.cantidad} x {self.producto.nombre}"
 
-# ==========================================
-# 3. OTROS MODELOS
-# ==========================================
+
 
 class Task(models.Model):
     title = models.CharField(max_length=200)
@@ -66,7 +66,7 @@ class Task(models.Model):
         return self.title
 
 class Usuario(AbstractUser):
-    # Añade related_name para evitar conflictos con el modelo auth.User
+    
     groups = models.ManyToManyField(
         'auth.Group',
         related_name='usuario_groups',

@@ -9,22 +9,22 @@ urlpatterns = [
     path('nosotros/', views.nosotros, name='nosotros'),
     path('logout/', views.cerrar_sesion, name='cerrar_sesion'),
 
-    # 1. Formulario para pedir el correo
+    # Formulario para pedir el correo
     path('reset_password/', 
          auth_views.PasswordResetView.as_view(template_name="password_reset.html"), 
          name='password_reset'),
 
-    # 2. Mensaje de "Correo enviado"
+    # Mensaje de "Correo enviado"
     path('reset_password_sent/', 
         auth_views.PasswordResetDoneView.as_view(template_name="password_reset_sent.html"), 
         name='password_reset_done'),
 
-    # 3. Link que llega al correo (para poner la nueva clave)
+    #  Link que llega al correo (para poner la nueva clave)
     path('reset/<uidb64>/<token>/', 
         auth_views.PasswordResetConfirmView.as_view(template_name="password_reset_form.html"), 
         name='password_reset_confirm'),
 
-    # 4. Mensaje de "Contraseña cambiada con éxito"
+    # Mensaje de "Contraseña cambiada con éxito"
     path('reset_password_complete/', 
         auth_views.PasswordResetCompleteView.as_view(template_name="password_reset_done.html"), 
         name='password_reset_complete'),
