@@ -146,21 +146,43 @@
                                     <p>Calidad Premium</p>
                                     
                                     <div class="vendor-options">
-                                        <button class="btn-vendor add-to-cart" 
-                                                data-id="{{ p.id }}" data-name="{{ p.nombre }}" 
-                                                data-price="{{ p.precio_castano }}" data-vendor="Castaño">
-                                            <span>Castaño:</span><span>${{ p.precio_castano }}</span>
-                                        </button>
-                                        <button class="btn-vendor add-to-cart" 
-                                                data-id="{{ p.id }}" data-name="{{ p.nombre }}" 
-                                                data-price="{{ p.precio_foodtruck }}" data-vendor="Foodtruck">
-                                            <span>Foodtruck:</span><span>${{ p.precio_foodtruck }}</span>
-                                        </button>
-                                        <button class="btn-vendor add-to-cart" 
-                                                data-id="{{ p.id }}" data-name="{{ p.nombre }}" 
-                                                data-price="{{ p.precio_casino }}" data-vendor="Casino">
-                                            <span>Casino:</span><span>${{ p.precio_casino }}</span>
-                                        </button>
+    
+                                        {% if p.stock_castano > 0 %}
+                                            <button class="btn-vendor add-to-cart" 
+                                                    data-id="{{ p.id }}" data-name="{{ p.nombre }}" 
+                                                    data-price="{{ p.precio_castano }}" data-vendor="Castaño">
+                                                <span>Castaño:</span><span>${{ p.precio_castano }}</span>
+                                            </button>
+                                        {% else %}
+                                            <button class="btn-vendor no-stock" disabled>
+                                                <span>Castaño:</span><span>AGOTADO</span>
+                                            </button>
+                                        {% endif %}
+
+                                        {% if p.stock_foodtruck > 0 %}
+                                            <button class="btn-vendor add-to-cart" 
+                                                    data-id="{{ p.id }}" data-name="{{ p.nombre }}" 
+                                                    data-price="{{ p.precio_foodtruck }}" data-vendor="Foodtruck">
+                                                <span>Foodtruck:</span><span>${{ p.precio_foodtruck }}</span>
+                                            </button>
+                                        {% else %}
+                                            <button class="btn-vendor no-stock" disabled>
+                                                <span>Foodtruck:</span><span>AGOTADO</span>
+                                            </button>
+                                        {% endif %}
+
+                                        {% if p.stock_casino > 0 %}
+                                            <button class="btn-vendor add-to-cart" 
+                                                    data-id="{{ p.id }}" data-name="{{ p.nombre }}" 
+                                                    data-price="{{ p.precio_casino }}" data-vendor="Casino">
+                                                <span>Casino:</span><span>${{ p.precio_casino }}</span>
+                                            </button>
+                                        {% else %}
+                                            <button class="btn-vendor no-stock" disabled>
+                                                <span>Casino:</span><span>AGOTADO</span>
+                                            </button>
+                                        {% endif %}
+
                                     </div>
                                 </div>
                             </div>
@@ -192,21 +214,43 @@
                                     <h4>{{ p.nombre }}</h4>
                                     <p>Calidad Premium</p>
                                     <div class="vendor-options">
-                                        <button class="btn-vendor add-to-cart" 
-                                                data-id="{{ p.id }}" data-name="{{ p.nombre }}" 
-                                                data-price="{{ p.precio_castano }}" data-vendor="Castaño">
-                                            <span>Castaño:</span><span>${{ p.precio_castano }}</span>
-                                        </button>
-                                        <button class="btn-vendor add-to-cart" 
-                                                data-id="{{ p.id }}" data-name="{{ p.nombre }}" 
-                                                data-price="{{ p.precio_foodtruck }}" data-vendor="Foodtruck">
-                                            <span>Foodtruck:</span><span>${{ p.precio_foodtruck }}</span>
-                                        </button>
-                                        <button class="btn-vendor add-to-cart" 
-                                                data-id="{{ p.id }}" data-name="{{ p.nombre }}" 
-                                                data-price="{{ p.precio_casino }}" data-vendor="Casino">
-                                            <span>Casino:</span><span>${{ p.precio_casino }}</span>
-                                        </button>
+    
+                                        {% if p.stock_castano > 0 %}
+                                            <button class="btn-vendor add-to-cart" 
+                                                    data-id="{{ p.id }}" data-name="{{ p.nombre }}" 
+                                                    data-price="{{ p.precio_castano }}" data-vendor="Castaño">
+                                                <span>Castaño:</span><span>${{ p.precio_castano }}</span>
+                                            </button>
+                                        {% else %}
+                                            <button class="btn-vendor no-stock" disabled>
+                                                <span>Castaño:</span><span>AGOTADO</span>
+                                            </button>
+                                        {% endif %}
+
+                                        {% if p.stock_foodtruck > 0 %}
+                                            <button class="btn-vendor add-to-cart" 
+                                                    data-id="{{ p.id }}" data-name="{{ p.nombre }}" 
+                                                    data-price="{{ p.precio_foodtruck }}" data-vendor="Foodtruck">
+                                                <span>Foodtruck:</span><span>${{ p.precio_foodtruck }}</span>
+                                            </button>
+                                        {% else %}
+                                            <button class="btn-vendor no-stock" disabled>
+                                                <span>Foodtruck:</span><span>AGOTADO</span>
+                                            </button>
+                                        {% endif %}
+
+                                        {% if p.stock_casino > 0 %}
+                                            <button class="btn-vendor add-to-cart" 
+                                                    data-id="{{ p.id }}" data-name="{{ p.nombre }}" 
+                                                    data-price="{{ p.precio_casino }}" data-vendor="Casino">
+                                                <span>Casino:</span><span>${{ p.precio_casino }}</span>
+                                            </button>
+                                        {% else %}
+                                            <button class="btn-vendor no-stock" disabled>
+                                                <span>Casino:</span><span>AGOTADO</span>
+                                            </button>
+                                        {% endif %}
+
                                     </div>
                                 </div>
                             </div>
@@ -238,21 +282,43 @@
                                     <h4>{{ p.nombre }}</h4>
                                     <p>Calidad Premium</p>
                                     <div class="vendor-options">
-                                        <button class="btn-vendor add-to-cart" 
-                                                data-id="{{ p.id }}" data-name="{{ p.nombre }}" 
-                                                data-price="{{ p.precio_castano }}" data-vendor="Castaño">
-                                            <span>Castaño:</span><span>${{ p.precio_castano }}</span>
-                                        </button>
-                                        <button class="btn-vendor add-to-cart" 
-                                                data-id="{{ p.id }}" data-name="{{ p.nombre }}" 
-                                                data-price="{{ p.precio_foodtruck }}" data-vendor="Foodtruck">
-                                            <span>Foodtruck:</span><span>${{ p.precio_foodtruck }}</span>
-                                        </button>
-                                        <button class="btn-vendor add-to-cart" 
-                                                data-id="{{ p.id }}" data-name="{{ p.nombre }}" 
-                                                data-price="{{ p.precio_casino }}" data-vendor="Casino">
-                                            <span>Casino:</span><span>${{ p.precio_casino }}</span>
-                                        </button>
+    
+                                        {% if p.stock_castano > 0 %}
+                                            <button class="btn-vendor add-to-cart" 
+                                                    data-id="{{ p.id }}" data-name="{{ p.nombre }}" 
+                                                    data-price="{{ p.precio_castano }}" data-vendor="Castaño">
+                                                <span>Castaño:</span><span>${{ p.precio_castano }}</span>
+                                            </button>
+                                        {% else %}
+                                            <button class="btn-vendor no-stock" disabled>
+                                                <span>Castaño:</span><span>AGOTADO</span>
+                                            </button>
+                                        {% endif %}
+
+                                        {% if p.stock_foodtruck > 0 %}
+                                            <button class="btn-vendor add-to-cart" 
+                                                    data-id="{{ p.id }}" data-name="{{ p.nombre }}" 
+                                                    data-price="{{ p.precio_foodtruck }}" data-vendor="Foodtruck">
+                                                <span>Foodtruck:</span><span>${{ p.precio_foodtruck }}</span>
+                                            </button>
+                                        {% else %}
+                                            <button class="btn-vendor no-stock" disabled>
+                                                <span>Foodtruck:</span><span>AGOTADO</span>
+                                            </button>
+                                        {% endif %}
+
+                                        {% if p.stock_casino > 0 %}
+                                            <button class="btn-vendor add-to-cart" 
+                                                    data-id="{{ p.id }}" data-name="{{ p.nombre }}" 
+                                                    data-price="{{ p.precio_casino }}" data-vendor="Casino">
+                                                <span>Casino:</span><span>${{ p.precio_casino }}</span>
+                                            </button>
+                                        {% else %}
+                                            <button class="btn-vendor no-stock" disabled>
+                                                <span>Casino:</span><span>AGOTADO</span>
+                                            </button>
+                                        {% endif %}
+
                                     </div>
                                 </div>
                             </div>
@@ -284,21 +350,43 @@
                                     <h4>{{ p.nombre }}</h4>
                                     <p>Calidad Premium</p>
                                     <div class="vendor-options">
-                                        <button class="btn-vendor add-to-cart" 
-                                                data-id="{{ p.id }}" data-name="{{ p.nombre }}" 
-                                                data-price="{{ p.precio_castano }}" data-vendor="Castaño">
-                                            <span>Castaño:</span><span>${{ p.precio_castano }}</span>
-                                        </button>
-                                        <button class="btn-vendor add-to-cart" 
-                                                data-id="{{ p.id }}" data-name="{{ p.nombre }}" 
-                                                data-price="{{ p.precio_foodtruck }}" data-vendor="Foodtruck">
-                                            <span>Foodtruck:</span><span>${{ p.precio_foodtruck }}</span>
-                                        </button>
-                                        <button class="btn-vendor add-to-cart" 
-                                                data-id="{{ p.id }}" data-name="{{ p.nombre }}" 
-                                                data-price="{{ p.precio_casino }}" data-vendor="Casino">
-                                            <span>Casino:</span><span>${{ p.precio_casino }}</span>
-                                        </button>
+    
+                                        {% if p.stock_castano > 0 %}
+                                            <button class="btn-vendor add-to-cart" 
+                                                    data-id="{{ p.id }}" data-name="{{ p.nombre }}" 
+                                                    data-price="{{ p.precio_castano }}" data-vendor="Castaño">
+                                                <span>Castaño:</span><span>${{ p.precio_castano }}</span>
+                                            </button>
+                                        {% else %}
+                                            <button class="btn-vendor no-stock" disabled>
+                                                <span>Castaño:</span><span>AGOTADO</span>
+                                            </button>
+                                        {% endif %}
+
+                                        {% if p.stock_foodtruck > 0 %}
+                                            <button class="btn-vendor add-to-cart" 
+                                                    data-id="{{ p.id }}" data-name="{{ p.nombre }}" 
+                                                    data-price="{{ p.precio_foodtruck }}" data-vendor="Foodtruck">
+                                                <span>Foodtruck:</span><span>${{ p.precio_foodtruck }}</span>
+                                            </button>
+                                        {% else %}
+                                            <button class="btn-vendor no-stock" disabled>
+                                                <span>Foodtruck:</span><span>AGOTADO</span>
+                                            </button>
+                                        {% endif %}
+
+                                        {% if p.stock_casino > 0 %}
+                                            <button class="btn-vendor add-to-cart" 
+                                                    data-id="{{ p.id }}" data-name="{{ p.nombre }}" 
+                                                    data-price="{{ p.precio_casino }}" data-vendor="Casino">
+                                                <span>Casino:</span><span>${{ p.precio_casino }}</span>
+                                            </button>
+                                        {% else %}
+                                            <button class="btn-vendor no-stock" disabled>
+                                                <span>Casino:</span><span>AGOTADO</span>
+                                            </button>
+                                        {% endif %}
+
                                     </div>
                                 </div>
                             </div>
@@ -330,21 +418,43 @@
                                     <h4>{{ p.nombre }}</h4>
                                     <p>Calidad Premium</p>
                                     <div class="vendor-options">
-                                        <button class="btn-vendor add-to-cart" 
-                                                data-id="{{ p.id }}" data-name="{{ p.nombre }}" 
-                                                data-price="{{ p.precio_castano }}" data-vendor="Castaño">
-                                            <span>Castaño:</span><span>${{ p.precio_castano }}</span>
-                                        </button>
-                                        <button class="btn-vendor add-to-cart" 
-                                                data-id="{{ p.id }}" data-name="{{ p.nombre }}" 
-                                                data-price="{{ p.precio_foodtruck }}" data-vendor="Foodtruck">
-                                            <span>Foodtruck:</span><span>${{ p.precio_foodtruck }}</span>
-                                        </button>
-                                        <button class="btn-vendor add-to-cart" 
-                                                data-id="{{ p.id }}" data-name="{{ p.nombre }}" 
-                                                data-price="{{ p.precio_casino }}" data-vendor="Casino">
-                                            <span>Casino:</span><span>${{ p.precio_casino }}</span>
-                                        </button>
+    
+                                        {% if p.stock_castano > 0 %}
+                                            <button class="btn-vendor add-to-cart" 
+                                                    data-id="{{ p.id }}" data-name="{{ p.nombre }}" 
+                                                    data-price="{{ p.precio_castano }}" data-vendor="Castaño">
+                                                <span>Castaño:</span><span>${{ p.precio_castano }}</span>
+                                            </button>
+                                        {% else %}
+                                            <button class="btn-vendor no-stock" disabled>
+                                                <span>Castaño:</span><span>AGOTADO</span>
+                                            </button>
+                                        {% endif %}
+
+                                        {% if p.stock_foodtruck > 0 %}
+                                            <button class="btn-vendor add-to-cart" 
+                                                    data-id="{{ p.id }}" data-name="{{ p.nombre }}" 
+                                                    data-price="{{ p.precio_foodtruck }}" data-vendor="Foodtruck">
+                                                <span>Foodtruck:</span><span>${{ p.precio_foodtruck }}</span>
+                                            </button>
+                                        {% else %}
+                                            <button class="btn-vendor no-stock" disabled>
+                                                <span>Foodtruck:</span><span>AGOTADO</span>
+                                            </button>
+                                        {% endif %}
+
+                                        {% if p.stock_casino > 0 %}
+                                            <button class="btn-vendor add-to-cart" 
+                                                    data-id="{{ p.id }}" data-name="{{ p.nombre }}" 
+                                                    data-price="{{ p.precio_casino }}" data-vendor="Casino">
+                                                <span>Casino:</span><span>${{ p.precio_casino }}</span>
+                                            </button>
+                                        {% else %}
+                                            <button class="btn-vendor no-stock" disabled>
+                                                <span>Casino:</span><span>AGOTADO</span>
+                                            </button>
+                                        {% endif %}
+
                                     </div>
                                 </div>
                             </div>

@@ -81,7 +81,7 @@ def crear_cuenta(request):
     return render(request, 'crear_cuenta.html')
 
 
-# PROCESAR ORDEN (CON STOCK)
+#  PROCESAR ORDEN (CON STOCK)
 
 
 @login_required(login_url='iniciar_sesion')
@@ -93,7 +93,7 @@ def procesar_orden(request):
             carrito = data.get('carrito', [])
             total = data.get('total', 0)
 
-            # Crear la Orden General
+            # 1. Crear la Orden General
             orden = Orden.objects.create(
                 usuario=request.user,
                 total=total
@@ -109,7 +109,7 @@ def procesar_orden(request):
                 # Obtener el producto real de la base de datos
                 producto_db = Producto.objects.get(id=producto_id)
 
-                # --- LÓGICA DE STOCK ---
+              
                 if vendedor == "Castaño":
                     if producto_db.stock_castano >= cantidad:
                         producto_db.stock_castano -= cantidad
@@ -131,12 +131,12 @@ def procesar_orden(request):
                 # Guardar el nuevo stock en la BD
                 producto_db.save()
 
+                
                 DetalleOrden.objects.create(
                     orden=orden,
                     producto=producto_db,
                     cantidad=cantidad,
-                    precio_unitario=precio,  
-                    subtotal=precio * cantidad
+                    precio_al_momento=precio
                 )
 
             return JsonResponse({'status': 'success', 'orden_id': orden.id})
@@ -151,6 +151,7 @@ def procesar_orden(request):
 
 # VISTAS DE HISTORIAL Y PERFIL
 
+
 @login_required(login_url='iniciar_sesion')
 def historial(request):
     # Buscamos las órdenes del usuario logueado
@@ -161,7 +162,7 @@ def historial(request):
     })
 
 def buscar(request):
-    query = request.GET.get('q') # Obtenemos lo que escribió el usuario
+    query = request.GET.get('q') 
     resultados = []
 
     if query:
